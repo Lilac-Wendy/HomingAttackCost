@@ -3,6 +3,7 @@ package me.mfletcher.homing.mixin;
 import com.mojang.authlib.GameProfile;
 import me.mfletcher.homing.HomingAttack;
 import me.mfletcher.homing.PlayerHomingAttackInfo;
+import me.mfletcher.homing.PlayerHomingData;
 import me.mfletcher.homing.mixinaccess.IServerPlayerMixin;
 import me.mfletcher.homing.network.HomingMessages;
 import me.mfletcher.homing.network.protocol.BoostS2CPacket;
@@ -39,9 +40,6 @@ public abstract class ServerPlayerMixin extends Player implements IServerPlayerM
     private PlayerHomingAttackInfo playerHomingAttackInfo = null;
 
     @Unique
-    private boolean isBoosting;
-
-    @Unique
     private final MobEffectInstance speedEffect = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20,
             HomingAttack.config.boostLevel, false, false, false);
 
@@ -53,7 +51,7 @@ public abstract class ServerPlayerMixin extends Player implements IServerPlayerM
     @Override
     public void travel(Vec3 movementInput) {
         if (playerHomingAttackInfo == null) {
-            if (isBoosting) {
+            if (PlayerHomingData.isBoosting(this)) {
                 addEffect(speedEffect);
                 causeFoodExhaustion(0.05F);
                 super.travel(new Vec3(0, 0, 1));
@@ -91,12 +89,12 @@ public abstract class ServerPlayerMixin extends Player implements IServerPlayerM
 
     @Unique
     public void setBoosting(boolean boosting) {
-        this.isBoosting = boosting;
+        PlayerHomingData.setBoosting(this, boosting);
         if (!boosting)
             removeEffect(speedEffect.getEffect());
         for (Player p : level().players())
             if (p.distanceTo(this) < 128) {
-                HomingMessages.sendToPlayer(new BoostS2CPacket(getId(), isBoosting), (ServerPlayer) p);
+                HomingMessages.sendToPlayer(new BoostS2CPacket(getId(), PlayerHomingData.isBoosting(this)), (ServerPlayer) p);
             }
 
     }

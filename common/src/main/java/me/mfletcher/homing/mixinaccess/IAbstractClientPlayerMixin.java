@@ -6,7 +6,5 @@ public interface IAbstractClientPlayerMixin {
 
     void stopAnimations();
 
-    boolean isBoosting();
-
     void setBoosting(boolean boosting);
 }

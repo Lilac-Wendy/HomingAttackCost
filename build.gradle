@@ -42,6 +42,13 @@ subprojects {
             name "KosmX's maven"
             url 'https://maven.kosmx.dev/'
         }
+        maven { url = "https://maven.florens.be/releases" }
+        maven {
+            url "https://jitpack.io"
+            content {
+                includeGroupByRegex "com.github.*"
+            }
+        }
     }
 
     dependencies {

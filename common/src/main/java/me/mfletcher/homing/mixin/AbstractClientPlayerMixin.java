@@ -10,6 +10,7 @@ import dev.kosmx.playerAnim.core.util.Ease;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 import me.mfletcher.homing.HomingAttack;
+import me.mfletcher.homing.PlayerHomingData;
 import me.mfletcher.homing.mixinaccess.IAbstractClientPlayerMixin;
 import me.mfletcher.homing.mixinaccess.IKeyboardInputMixin;
 import net.minecraft.client.Minecraft;
@@ -31,12 +32,6 @@ public abstract class AbstractClientPlayerMixin extends Player implements IAbstr
     @Final
     public ClientLevel clientLevel;
 
-    @Unique
-    private boolean isHoming = false;
-
-    @Unique
-    private boolean isBoosting;
-
     public AbstractClientPlayerMixin(Level level, BlockPos pos, float yaw, GameProfile gameProfile) {
         super(level, pos, yaw, gameProfile);
     }
@@ -44,7 +39,7 @@ public abstract class AbstractClientPlayerMixin extends Player implements IAbstr
     @Override
     public void aiStep() {
         super.aiStep();
-        if (isHoming)
+        if (PlayerHomingData.isHoming(this))
             clientLevel.addParticle(ParticleTypes.ELECTRIC_SPARK, getX(), getY(), getZ(), 0, 0, 0);
     }
 
@@ -55,7 +50,7 @@ public abstract class AbstractClientPlayerMixin extends Player implements IAbstr
         if (animation != null) {
             animation.setAnimation(new KeyframeAnimationPlayer(PlayerAnimationRegistry.getAnimation(new ResourceLocation(HomingAttack.MOD_ID, "spindash")))
                     .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL));
-            isHoming = true;
+            PlayerHomingData.setHoming(this, true);
         }
     }
 
@@ -74,17 +69,12 @@ public abstract class AbstractClientPlayerMixin extends Player implements IAbstr
         if (animation != null) {
             animation.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(5, Ease.OUTEXPO), null);
         }
-        isHoming = false;
-    }
-
-    @Unique
-    public boolean isBoosting() {
-        return isBoosting;
+        PlayerHomingData.setHoming(this, false);
     }
 
     @Unique
     public void setBoosting(boolean boosting) {
-        if (isBoosting != boosting) {
+        if (PlayerHomingData.isBoosting(this) != boosting) {
             if (boosting) {
                 startBoostAnimation();
             } else {
@@ -93,10 +83,10 @@ public abstract class AbstractClientPlayerMixin extends Player implements IAbstr
         }
 
 
-        isBoosting = boosting;
+        PlayerHomingData.setBoosting(this, boosting);
 
         if (this.equals(Minecraft.getInstance().player)) {
-            ((IKeyboardInputMixin) Minecraft.getInstance().player.input).setBoosting(isBoosting);
+            ((IKeyboardInputMixin) Minecraft.getInstance().player.input).setBoosting(boosting);
         }
     }
 }
