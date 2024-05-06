@@ -43,12 +43,12 @@ public final class HomingAttack {
                 if (entity != null)
                     HomingMessages.sendToServer(new AttackC2SPacket(((IMinecraftMixin) Minecraft.getInstance()).getHighlightedEntity().getId()));
             }
-            if (HomingConstants.BOOST_KEY.isDown() && !((IAbstractClientPlayerMixin) Minecraft.getInstance().player).isBoosting()
+            if (HomingConstants.BOOST_KEY.isDown() && !PlayerHomingData.isBoosting(Minecraft.getInstance().player)
                     && Minecraft.getInstance().player.mainSupportingBlockPos.isPresent() && Minecraft.getInstance().player.getFoodData().getFoodLevel() > 6
                     && !Minecraft.getInstance().player.isUsingItem()) {
                 HomingMessages.sendToServer(new BoostC2SPacket(true));
                 ((IAbstractClientPlayerMixin) Minecraft.getInstance().player).setBoosting(true);
-            } else if (((IAbstractClientPlayerMixin) Minecraft.getInstance().player).isBoosting()
+            } else if (PlayerHomingData.isBoosting(Minecraft.getInstance().player)
                     && (!HomingConstants.BOOST_KEY.isDown() || Minecraft.getInstance().player.getFoodData().getFoodLevel() <= 6
                     || Minecraft.getInstance().player.isUsingItem())) {
                 HomingMessages.sendToServer(new BoostC2SPacket(false));

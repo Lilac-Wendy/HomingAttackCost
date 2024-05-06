@@ -38,6 +38,8 @@ dependencies {
 
     modImplementation("dev.kosmx.player-anim:player-animation-lib-fabric:${rootProject.player_animator_version}")
     modApi "com.terraformersmc:modmenu:$rootProject.modmenu_version"
+    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${rootProject.mixin_extras_version}")))
+    modImplementation include("be.florens:expandability-fabric:${rootProject.expandability_version}")
 }
 
 processResources {
