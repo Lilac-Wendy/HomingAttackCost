@@ -1,0 +1,36 @@
+modLoader = "javafml"
+loaderVersion = "[47,)"
+issueTrackerURL = "https://github.com/mfletcher2/homingattack-boost-mod/issues"
+license = "GPL-3.0"
+
+[[mods]]
+modId = "homing_attack"
+version = "${version}"
+displayName = "Homing Attack"
+authors = "mfletcher"
+description = '''
+Sonic's Homing Attack and Boost in Minecraft
+'''
+logoFile = "assets/homing_attack/icon.png"
+displayURL = "https://github.com/mfletcher2/homingattack-boost-mod"
+
+[[dependencies.homing_attack]]
+modId = "forge"
+mandatory = true
+versionRange = "[47,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.homing_attack]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.homing_attack]]
+modId = "architectury"
+mandatory = true
+versionRange = "[9.2.14,)"
+ordering = "AFTER"
+side = "BOTH"

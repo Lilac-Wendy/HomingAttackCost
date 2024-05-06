@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "package": "me.mfletcher.homing_attack.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+    "AbstractClientPlayerMixin",
+    "KeyboardInputMixin"
+  ],
+  "mixins": [
+    "MinecraftMixin",
+    "MobMixin",
+    "ServerPlayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

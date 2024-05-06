@@ -1,0 +1,14 @@
+{
+  "key.homing.attack": "Homing Attack",
+  "key.homing.boost": "Boost",
+  "category.homing.main": "Homing Attack",
+  "text.autoconfig.homing.option.homingRange": "Homing attack range",
+  "text.autoconfig.homing.option.homingSpeed": "Homing attack speed",
+  "text.autoconfig.homing.option.boostLevel": "Boost level",
+  "text.autoconfig.homing.option.baseHomingDamage": "Base homing damage",
+  "text.autoconfig.homing.option.ironArmorHomingDamage": "Iron armor homing damage bonus",
+  "text.autoconfig.homing.option.goldArmorHomingDamage": "Gold armor homing damage bonus",
+  "text.autoconfig.homing.option.diamondArmorHomingDamage": "Diamond armor homing damage bonus",
+  "text.autoconfig.homing.option.netheriteArmorHomingDamage": "Netherite armor homing damage bonus",
+  "text.autoconfig.homing.option.boostLevel.@Tooltip": "(Speed effect level)"
+}
