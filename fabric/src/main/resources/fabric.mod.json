@@ -13,18 +13,18 @@
     "issues": "https://github.com/mfletcher2/homingattack-boost-mod/issues"
   },
   "license": "GPL-3.0",
-  "icon": "assets/homing_attack/icon.png",
+  "icon": "assets/homing/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "me.mfletcher.homing_attack.fabric.HomingAttackFabric"
+      "me.mfletcher.homing.fabric.HomingAttackFabric"
     ],
     "client": [
-      "me.mfletcher.homing_attack.fabric.client.HomingAttackFabricClient"
+      "me.mfletcher.homing.fabric.client.HomingAttackFabricClient"
     ]
   },
   "mixins": [
-    "homing_attack.mixins.json"
+    "homing.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.15.10",
@@ -36,6 +36,6 @@
     "player-animator": ">=1.0.2-rc1+1.20"
   },
   "suggests": {
-    "another-mod": "*"
+    "modmenu": "*"
   }
 }
