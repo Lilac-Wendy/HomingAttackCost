@@ -4,7 +4,7 @@ import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
-@Config(name = "assets.homing_attack")
+@Config(name = "assets.homing")
 public class ModConfig implements ConfigData {
     public int homingRange = 20;
 

@@ -39,14 +39,14 @@ public class HomingConstants {
     }
 
     public static final KeyMapping HOMING_KEY = new KeyMapping(
-            "key.homing_attack.attack",
+            "key.homing.attack",
             InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_Z,
-            "category.homing_attack.main");
+            "category.homing.main");
 
     public static final KeyMapping BOOST_KEY = new KeyMapping(
-            "key.homing_attack.boost",
+            "key.homing.boost",
             InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_B,
-            "category.homing_attack.main");
+            "category.homing.main");
 }

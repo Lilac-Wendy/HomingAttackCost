@@ -21,6 +21,9 @@
     ],
     "client": [
       "me.mfletcher.homing.fabric.client.HomingAttackFabricClient"
+    ],
+    "modmenu": [
+      "me.mfletcher.homing.fabric.client.ModMenuIntegration"
     ]
   },
   "mixins": [
