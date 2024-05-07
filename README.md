@@ -5,7 +5,8 @@
 
 TODO:
 
-- Add boost on water
+- Add Forge settings button integration
+- Custom sounds
 
 Known Issues:
 
