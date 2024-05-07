@@ -24,6 +24,7 @@ public final class HomingAttack {
     public static void init() {
         // Write common init code here.
         HomingMessages.init();
+        HomingSounds.init();
         AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
         config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 

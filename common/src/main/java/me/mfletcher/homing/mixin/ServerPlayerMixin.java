@@ -2,6 +2,7 @@ package me.mfletcher.homing.mixin;
 
 import com.mojang.authlib.GameProfile;
 import me.mfletcher.homing.HomingAttack;
+import me.mfletcher.homing.HomingSounds;
 import me.mfletcher.homing.PlayerHomingAttackInfo;
 import me.mfletcher.homing.PlayerHomingData;
 import me.mfletcher.homing.mixinaccess.IServerPlayerMixin;
@@ -10,6 +11,7 @@ import me.mfletcher.homing.network.protocol.BoostS2CPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -68,6 +70,7 @@ public abstract class ServerPlayerMixin extends Player implements IServerPlayerM
     @Unique
     public void doHoming(Entity entity) {
         if (entity.distanceTo(this) <= HomingAttack.config.homingRange && playerHomingAttackInfo == null) {
+            level().playSound(null, blockPosition(), HomingSounds.HOMING.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
             playerHomingAttackInfo = new PlayerHomingAttackInfo((ServerPlayer) (Player) this, entity);
         } else
             LOGGER.error("Homing attack failed: " + playerHomingAttackInfo);
@@ -92,6 +95,8 @@ public abstract class ServerPlayerMixin extends Player implements IServerPlayerM
         PlayerHomingData.setBoosting(this, boosting);
         if (!boosting)
             removeEffect(speedEffect.getEffect());
+        else
+            level().playSound(null, blockPosition(), HomingSounds.BOOST.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
         for (Player p : level().players())
             if (p.distanceTo(this) < 128) {
                 HomingMessages.sendToPlayer(new BoostS2CPacket(getId(), PlayerHomingData.isBoosting(this)), (ServerPlayer) p);
