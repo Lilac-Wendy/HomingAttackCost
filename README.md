@@ -6,7 +6,6 @@
 TODO:
 
 - Add Forge settings button integration
-- Custom sounds
 
 Known Issues:
 
