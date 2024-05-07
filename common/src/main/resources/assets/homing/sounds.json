@@ -1,0 +1,17 @@
+{
+  "boost": {
+    "sounds": [
+      "homing:boost"
+    ]
+  },
+  "homing": {
+    "sounds": [
+      "homing:homing"
+    ]
+  },
+  "reticle": {
+    "sounds": [
+      "homing:reticle"
+    ]
+  }
+}
