@@ -31,7 +31,7 @@ public final class HomingAttackForge {
         Entity entity = event.getEntity();
         FluidState fluidState = event.getFluidState();
         if (entity instanceof Player player) {
-            if (PlayerHomingData.isBoosting(player) && !player.isUsingItem() && !player.isCrouching() && !player.isUnderWater() && !player.isSwimming()) {
+            if (PlayerHomingData.isBoosting(player) && !player.isUsingItem() && !player.isCrouching() && !player.isInWater() && !player.isSwimming()) {
                 if (fluidState.is(FluidTags.LAVA) && !player.fireImmune() && !EnchantmentHelper.hasFrostWalker(player)) {
                     player.hurt(player.damageSources().hotFloor(), 1);
                 }

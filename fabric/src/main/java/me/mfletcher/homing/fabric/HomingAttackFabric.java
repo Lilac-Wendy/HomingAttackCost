@@ -26,7 +26,7 @@ public final class HomingAttackFabric implements ModInitializer {
 
     private static boolean onFluidCollision(LivingEntity entity, FluidState fluidState) {
         if (entity instanceof Player player) {
-            if (PlayerHomingData.isBoosting(player) && !player.isUsingItem() && !player.isCrouching() && !player.isUnderWater() && !player.isSwimming()) {
+            if (PlayerHomingData.isBoosting(player) && !player.isUsingItem() && !player.isCrouching() && !player.isInWater() && !player.isSwimming()) {
                 if (fluidState.is(FluidTags.LAVA) && !player.fireImmune() && !EnchantmentHelper.hasFrostWalker(player)) {
                     player.hurt(player.damageSources().hotFloor(), 1);
                 }
