@@ -2,9 +2,14 @@ package me.mfletcher.homing.mixin;
 
 import com.mojang.blaze3d.platform.WindowEventHandler;
 import me.mfletcher.homing.HomingAttack;
+import me.mfletcher.homing.HomingSounds;
 import me.mfletcher.homing.mixinaccess.IMinecraftMixin;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.thread.ReentrantBlockableEventLoop;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -35,6 +40,11 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnabl
         return null;
     }
 
+    @Shadow
+    public SoundManager getSoundManager() {
+        return null;
+    }
+
 
     @Inject(method = "shouldEntityAppearGlowing", at = @At("HEAD"), cancellable = true)
     public void onHasOutline(Entity entity, CallbackInfoReturnable<Boolean> cir) {
@@ -52,9 +62,13 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnabl
         if (player == null) return;
         if (!player.isSpectator() && !player.isPassenger()) {
             if (!player.onGround()) {
-                if (homingReady)
-                    setHighlightedEntity(getEntityLooking());
-                else
+                if (homingReady) {
+                    Entity entityLooking = getEntityLooking();
+                    if (entityLooking != null && !entityLooking.equals(getHighlightedEntity())) {
+                        getSoundManager().play(new SimpleSoundInstance(HomingSounds.RETICLE.get(), SoundSource.PLAYERS, 1, 1, SoundInstance.createUnseededRandom(), player.blockPosition()));
+                    }
+                    setHighlightedEntity(entityLooking);
+                } else
                     setHighlightedEntity(null);
             } else {
                 setHighlightedEntity(null);

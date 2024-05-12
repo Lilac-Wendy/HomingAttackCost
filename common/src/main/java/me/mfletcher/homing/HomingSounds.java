@@ -15,10 +15,12 @@ public class HomingSounds {
     public static final Supplier<RegistrarManager> MANAGER = Suppliers.memoize(() -> RegistrarManager.get(HomingAttack.MOD_ID));
     public static RegistrySupplier<SoundEvent> BOOST;
     public static RegistrySupplier<SoundEvent> HOMING;
+    public static RegistrySupplier<SoundEvent> RETICLE;
 
     public static void init() {
         Registrar<SoundEvent> soundEvents = MANAGER.get().get(Registries.SOUND_EVENT);
         BOOST = soundEvents.register(new ResourceLocation(HomingAttack.MOD_ID, "boost"), () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HomingAttack.MOD_ID, "boost")));
         HOMING = soundEvents.register(new ResourceLocation(HomingAttack.MOD_ID, "homing"), () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HomingAttack.MOD_ID, "homing")));
+        RETICLE = soundEvents.register(new ResourceLocation(HomingAttack.MOD_ID, "reticle"), () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HomingAttack.MOD_ID, "reticle")));
     }
 }
