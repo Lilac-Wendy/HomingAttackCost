@@ -3,15 +3,21 @@ package me.mfletcher.homing.forge;
 import be.florens.expandability.api.forge.LivingFluidCollisionEvent;
 import dev.architectury.platform.forge.EventBuses;
 import me.mfletcher.homing.HomingAttack;
+import me.mfletcher.homing.ModConfig;
 import me.mfletcher.homing.PlayerHomingData;
+import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -25,6 +31,8 @@ public final class HomingAttackForge {
         HomingAttack.init();
 
         MinecraftForge.EVENT_BUS.addListener(HomingAttackForge::onFluidCollision);
+
+        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> HomingAttackForge::registerModsPage);
     }
 
     private static void onFluidCollision(LivingFluidCollisionEvent event) {
@@ -41,5 +49,9 @@ public final class HomingAttackForge {
                 event.setResult(Event.Result.DENY);
         } else
             event.setResult(Event.Result.DENY);
+    }
+
+    private static void registerModsPage() {
+        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory((client, parent) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get()));
     }
 }

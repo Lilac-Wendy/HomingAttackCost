@@ -58,8 +58,6 @@ subprojects {
             officialMojangMappings()
             parchment("org.parchmentmc.data:parchment-$rootProject.minecraft_version:$rootProject.parchment_version@zip")
         }
-
-        modApi("me.shedaniel.cloth:cloth-config:$rootProject.cloth_config_version")
     }
 
     java {
@@ -100,6 +98,6 @@ subprojects {
 
 forgix {
     group = "me.mfletcher.homing"
-    mergedJarName = "homing"
+    mergedJarName = "homing-${rootProject.mod_version}.jar"
 }
 
