@@ -45,7 +45,6 @@ public abstract class AbstractClientPlayerMixin extends Player implements IAbstr
 
     @Unique
     public void startHomingAnimation() {
-        System.out.println("Starting homing animation");
         var animation = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) (Object) this).get(new ResourceLocation(HomingAttack.MOD_ID, "animation"));
         if (animation != null) {
             animation.setAnimation(new KeyframeAnimationPlayer(PlayerAnimationRegistry.getAnimation(new ResourceLocation(HomingAttack.MOD_ID, "spindash")))
