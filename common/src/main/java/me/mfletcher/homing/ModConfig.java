@@ -20,5 +20,6 @@ public class ModConfig implements ConfigData {
     float defenseHomingDamageMultiplier = 0.3f;
     float toughnessHomingDamageMultiplier = 2.5f;
 
-    public boolean reticleBeep = true;
+    @ConfigEntry.BoundedDiscrete(min = 0, max = 100)
+    public int reticleVolume = 100;
 }

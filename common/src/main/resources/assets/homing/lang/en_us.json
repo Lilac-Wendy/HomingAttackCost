@@ -10,5 +10,5 @@
   "text.autoconfig.assets.homing.option.defenseHomingDamageMultiplier": "Armor defense homing damage multiplier",
   "text.autoconfig.assets.homing.option.toughnessHomingDamageMultiplier": "Armor defense homing damage multiplier",
   "text.autoconfig.assets.homing.option.boostLevel.@Tooltip": "(Speed effect level)",
-  "text.autoconfig.assets.homing.option.reticleBeep": "Reticle beep sound"
+  "text.autoconfig.assets.homing.option.reticleVolume": "Reticle beep volume"
 }
