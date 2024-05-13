@@ -2,6 +2,7 @@ package me.mfletcher.homing;
 
 import dev.architectury.event.events.client.ClientLifecycleEvent;
 import dev.architectury.event.events.client.ClientTickEvent;
+import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationFactory;
@@ -10,6 +11,7 @@ import me.mfletcher.homing.mixinaccess.IMinecraftMixin;
 import me.mfletcher.homing.network.HomingMessages;
 import me.mfletcher.homing.network.protocol.AttackC2SPacket;
 import me.mfletcher.homing.network.protocol.BoostC2SPacket;
+import me.mfletcher.homing.network.protocol.ConfigSyncS2CPacket;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.minecraft.client.Minecraft;
@@ -37,6 +39,8 @@ public final class HomingAttack {
                     42,
                     (abstractClientPlayer) -> new ModifierLayer<>());
         });
+
+        PlayerEvent.PLAYER_JOIN.register(localPlayer -> HomingMessages.sendToPlayer(new ConfigSyncS2CPacket(config), localPlayer));
 
         ClientTickEvent.CLIENT_LEVEL_POST.register(minecraft -> {
             if (HomingConstants.HOMING_KEY.consumeClick()) {
