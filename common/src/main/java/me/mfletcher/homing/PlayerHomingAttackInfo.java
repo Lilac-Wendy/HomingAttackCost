@@ -6,6 +6,7 @@ import me.mfletcher.homing.network.protocol.AttackS2CPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.phys.Vec3;
 
 public class PlayerHomingAttackInfo {
@@ -61,15 +62,8 @@ public class PlayerHomingAttackInfo {
     private float getDamage() {
         final float[] damage = {HomingAttack.config.baseHomingDamage};
         player.getArmorSlots().forEach(itemStack -> {
-            if (HomingConstants.IRON_ARMOR.contains(itemStack.getItem())) {
-                damage[0] += HomingAttack.config.ironArmorHomingDamage;
-            } else if (HomingConstants.GOLD_ARMOR.contains(itemStack.getItem())) {
-                damage[0] += HomingAttack.config.goldArmorHomingDamage;
-            } else if (HomingConstants.DIAMOND_ARMOR.contains(itemStack.getItem())) {
-                damage[0] += HomingAttack.config.diamondArmorHomingDamage;
-            } else if (HomingConstants.NETHERITE_ARMOR.contains(itemStack.getItem())) {
-                damage[0] += HomingAttack.config.netheriteArmorHomingDamage;
-            }
+            if(itemStack.getItem() instanceof ArmorItem armorItem)
+                damage[0] += armorItem.getDefense() * HomingAttack.config.defenseHomingDamageMultiplier + armorItem.getToughness() * HomingAttack.config.toughnessHomingDamageMultiplier;
         });
         return damage[0];
     }

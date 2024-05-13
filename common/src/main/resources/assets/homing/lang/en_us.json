@@ -7,9 +7,8 @@
   "text.autoconfig.assets.homing.option.homingSpeed": "Homing attack speed",
   "text.autoconfig.assets.homing.option.boostLevel": "Boost level",
   "text.autoconfig.assets.homing.option.baseHomingDamage": "Base homing damage",
-  "text.autoconfig.assets.homing.option.ironArmorHomingDamage": "Iron armor homing damage bonus",
-  "text.autoconfig.assets.homing.option.goldArmorHomingDamage": "Gold armor homing damage bonus",
-  "text.autoconfig.assets.homing.option.diamondArmorHomingDamage": "Diamond armor homing damage bonus",
-  "text.autoconfig.assets.homing.option.netheriteArmorHomingDamage": "Netherite armor homing damage bonus",
-  "text.autoconfig.assets.homing.option.boostLevel.@Tooltip": "(Speed effect level)"
+  "text.autoconfig.assets.homing.option.defenseHomingDamageMultiplier": "Armor defense homing damage multiplier",
+  "text.autoconfig.assets.homing.option.toughnessHomingDamageMultiplier": "Armor defense homing damage multiplier",
+  "text.autoconfig.assets.homing.option.boostLevel.@Tooltip": "(Speed effect level)",
+  "text.autoconfig.assets.homing.option.reticleBeep": "Reticle beep sound"
 }
