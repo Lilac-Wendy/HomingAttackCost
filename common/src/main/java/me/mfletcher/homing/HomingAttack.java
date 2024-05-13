@@ -41,8 +41,10 @@ public final class HomingAttack {
         ClientTickEvent.CLIENT_LEVEL_POST.register(minecraft -> {
             if (HomingConstants.HOMING_KEY.consumeClick()) {
                 Entity entity = ((IMinecraftMixin) Minecraft.getInstance()).getHighlightedEntity();
-                if (entity != null)
+                if (entity != null) {
                     HomingMessages.sendToServer(new AttackC2SPacket(((IMinecraftMixin) Minecraft.getInstance()).getHighlightedEntity().getId()));
+                    ((IMinecraftMixin)Minecraft.getInstance()).setHomingUnready();
+                }
             }
             if (HomingConstants.BOOST_KEY.isDown() && !PlayerHomingData.isBoosting(Minecraft.getInstance().player)
                     && Minecraft.getInstance().player.mainSupportingBlockPos.isPresent() && Minecraft.getInstance().player.getFoodData().getFoodLevel() > 6

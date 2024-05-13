@@ -9,4 +9,6 @@ public interface IMinecraftMixin {
 
     Entity getHighlightedEntity();
 
+    boolean isHomingReady();
+
 }

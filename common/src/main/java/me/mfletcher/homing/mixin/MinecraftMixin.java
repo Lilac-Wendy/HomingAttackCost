@@ -23,7 +23,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Minecraft.class)
 public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnable> implements WindowEventHandler, IMinecraftMixin {
@@ -46,10 +45,10 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnabl
     }
 
 
-    @Inject(method = "shouldEntityAppearGlowing", at = @At("HEAD"), cancellable = true)
-    public void onHasOutline(Entity entity, CallbackInfoReturnable<Boolean> cir) {
-        if (entity.equals(getHighlightedEntity())) cir.setReturnValue(true);
-    }
+//    @Inject(method = "shouldEntityAppearGlowing", at = @At("HEAD"), cancellable = true)
+//    public void onHasOutline(Entity entity, CallbackInfoReturnable<Boolean> cir) {
+//        if (entity.equals(getHighlightedEntity())) cir.setReturnValue(true);
+//    }
 
     @Unique
     private Entity highlightedEntity;
@@ -115,6 +114,11 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnabl
     @Unique
     public void setHomingReady() {
         homingReady = true;
+    }
+
+    @Unique
+    public boolean isHomingReady() {
+        return homingReady;
     }
 
 }
