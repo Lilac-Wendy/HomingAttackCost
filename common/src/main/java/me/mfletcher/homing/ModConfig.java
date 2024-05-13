@@ -21,4 +21,5 @@ public class ModConfig implements ConfigData {
     float goldArmorHomingDamage = 1f;
     float diamondArmorHomingDamage = 1.5f;
     float netheriteArmorHomingDamage = 2.5f;
+    public boolean reticleBeep = true;
 }
