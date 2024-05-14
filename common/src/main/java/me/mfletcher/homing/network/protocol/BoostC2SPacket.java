@@ -25,7 +25,7 @@ public class BoostC2SPacket {
         NetworkManager.PacketContext context = supplier.get();
         context.queue(() -> {
             // Running on server
-            ((IServerPlayerMixin) context.getPlayer()).homing$setBoosting(isBoosting);
+            ((IServerPlayerMixin) context.getPlayer()).setBoosting(isBoosting);
         });
     }
 }

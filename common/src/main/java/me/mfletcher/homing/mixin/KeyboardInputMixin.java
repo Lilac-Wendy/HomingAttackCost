@@ -21,11 +21,11 @@ public abstract class KeyboardInputMixin extends Input implements IKeyboardInput
     private Options options;
 
     @Unique
-    private boolean homing$isBoosting;
+    private boolean isBoosting;
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     public void onTick(CallbackInfo ci) {
-        if (homing$isBoosting) {
+        if (isBoosting) {
             this.up = true;
             this.down = false;
             this.left = false;
@@ -39,8 +39,8 @@ public abstract class KeyboardInputMixin extends Input implements IKeyboardInput
     }
 
     @Unique
-    public void homing$setBoosting(boolean isBoosting) {
-        this.homing$isBoosting = isBoosting;
+    public void setBoosting(boolean isBoosting) {
+        this.isBoosting = isBoosting;
     }
 
 }

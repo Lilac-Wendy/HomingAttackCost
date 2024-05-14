@@ -5,7 +5,6 @@ import me.mfletcher.homing.mixinaccess.IServerPlayerMixin;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 
-import java.io.IOException;
 import java.util.function.Supplier;
 
 public class AttackC2SPacket {
@@ -27,11 +26,8 @@ public class AttackC2SPacket {
         NetworkManager.PacketContext context = supplier.get();
         context.queue(() -> {
             // Running on server
-            try (Level level = context.getPlayer().level()) {
-                ((IServerPlayerMixin) context.getPlayer()).homing$doHoming(level.getEntity(this.targetId));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            Level level = context.getPlayer().level();
+            ((IServerPlayerMixin) context.getPlayer()).doHoming(level.getEntity(this.targetId));
         });
     }
 }

@@ -6,7 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
-import java.util.Objects;
 import java.util.function.Supplier;
 
 public class BoostS2CPacket {
@@ -31,9 +30,9 @@ public class BoostS2CPacket {
         NetworkManager.PacketContext context = supplier.get();
         context.queue(() -> {
             // Running on client
-            Player boostPlayer = (Player) Objects.requireNonNull(Minecraft.getInstance().level).getEntity(this.boostPlayerId);
+            Player boostPlayer = (Player) Minecraft.getInstance().level.getEntity(this.boostPlayerId);
             if (boostPlayer == null || Minecraft.getInstance().player == null) return;
-            ((IAbstractClientPlayerMixin) boostPlayer).homing$setBoosting(isBoosting);
+            ((IAbstractClientPlayerMixin) boostPlayer).setBoosting(isBoosting);
         });
     }
 }

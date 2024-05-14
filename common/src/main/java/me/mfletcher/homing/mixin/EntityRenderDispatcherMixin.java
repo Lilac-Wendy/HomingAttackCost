@@ -17,8 +17,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Objects;
-
 // https://github.com/VazkiiMods/Neat/blob/master/Xplat/src/main/java/vazkii/neat/mixin/EntityRenderDispatcherMixin.java
 @Mixin(EntityRenderDispatcher.class)
 public abstract class EntityRenderDispatcherMixin {
@@ -34,10 +32,10 @@ public abstract class EntityRenderDispatcherMixin {
     private void onRender(Entity entity, double worldX, double worldY, double worldZ, float entityYRot, float partialTicks, PoseStack poseStack, MultiBufferSource buffers, int light, CallbackInfo ci) {
         // https://github.com/VazkiiMods/Neat/blob/master/Xplat/src/main/java/vazkii/neat/HealthBarRenderer.java
         float size = 1;
-        if (!(entity instanceof LivingEntity livingEntity) || !((IMinecraftMixin) Minecraft.getInstance()).homing$isHomingReady() || ((IMinecraftMixin) Minecraft.getInstance()).homing$getHighlightedEntity() != livingEntity)
+        if (!(entity instanceof LivingEntity livingEntity) || !((IMinecraftMixin) Minecraft.getInstance()).isHomingReady() || ((IMinecraftMixin) Minecraft.getInstance()).getHighlightedEntity() != livingEntity)
             return;
 
-        LocalPlayer p = Objects.requireNonNull(Minecraft.getInstance().player);
+        LocalPlayer p = Minecraft.getInstance().player;
         float dist = livingEntity.getBbWidth();
         double theta = Math.atan2(p.getX() - livingEntity.getX(), p.getZ() - livingEntity.getZ());
         double dx = dist * Math.sin(theta);
