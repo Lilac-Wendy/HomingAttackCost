@@ -18,8 +18,7 @@ public abstract class MobMixin extends LivingEntity implements Targeting {
     @Inject(method = "doHurtTarget", at = @At("HEAD"), cancellable = true)
     public void onTryAttack(Entity target, CallbackInfoReturnable<Boolean> cir) {
         if (target instanceof ServerPlayer
-//                && ((Player) target).getArmorValue() != 0
-                && this.equals(((IServerPlayerMixin) target).getHomingEntity()))
+                && this.equals(((IServerPlayerMixin) target).homing$getHomingEntity()))
             cir.setReturnValue(false);
     }
 }

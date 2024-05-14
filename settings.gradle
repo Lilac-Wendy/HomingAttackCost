@@ -7,7 +7,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'homing_attack'
+rootProject.name = 'homing'
 
 include 'common'
 include 'fabric'

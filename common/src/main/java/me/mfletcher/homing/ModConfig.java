@@ -8,17 +8,17 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 public class ModConfig implements ConfigData {
     public int homingRange = 20;
 
-    int homingSpeed = 3;
+    public int homingSpeed = 3;
 
     @ConfigEntry.Gui.Excluded
-    int homingTicksTimeout = 40;
+    public int homingTicksTimeout = 40;
 
     @ConfigEntry.Gui.Tooltip
     public int boostLevel = 50;
 
-    float baseHomingDamage = 0.5f;
-    float defenseHomingDamageMultiplier = 0.3f;
-    float toughnessHomingDamageMultiplier = 2.5f;
+    public float baseHomingDamage = 0.5f;
+    public float defenseHomingDamageMultiplier = 0.3f;
+    public float toughnessHomingDamageMultiplier = 2.5f;
 
     @ConfigEntry.BoundedDiscrete(min = 0, max = 100)
     public int reticleVolume = 100;

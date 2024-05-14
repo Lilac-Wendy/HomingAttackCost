@@ -24,6 +24,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Objects;
+
 @Mixin(Minecraft.class)
 public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnable> implements WindowEventHandler, IMinecraftMixin {
     @Shadow
@@ -45,40 +47,35 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnabl
     }
 
 
-//    @Inject(method = "shouldEntityAppearGlowing", at = @At("HEAD"), cancellable = true)
-//    public void onHasOutline(Entity entity, CallbackInfoReturnable<Boolean> cir) {
-//        if (entity.equals(getHighlightedEntity())) cir.setReturnValue(true);
-//    }
+    @Unique
+    private Entity homing$highlightedEntity;
 
     @Unique
-    private Entity highlightedEntity;
-
-    @Unique
-    private boolean homingReady;
+    private boolean homing$homingReady;
 
     @Inject(method = "tick", at = @At("TAIL"))
     public void onTick(CallbackInfo ci) {
         if (player == null) return;
         if (!player.isSpectator() && !player.isPassenger()) {
             if (!player.onGround()) {
-                if (homingReady) {
-                    Entity entityLooking = getEntityLooking();
-                    if (entityLooking != null && !entityLooking.equals(getHighlightedEntity()) && HomingAttack.config.reticleVolume > 0) {
+                if (homing$homingReady) {
+                    Entity entityLooking = homing$getEntityLooking();
+                    if (entityLooking != null && !entityLooking.equals(homing$getHighlightedEntity()) && HomingAttack.config.reticleVolume > 0) {
                         getSoundManager().play(new SimpleSoundInstance(HomingSounds.RETICLE.get(), SoundSource.PLAYERS, HomingAttack.config.reticleVolume / 100f, 1, SoundInstance.createUnseededRandom(), player.blockPosition()));
                     }
-                    setHighlightedEntity(entityLooking);
+                    homing$setHighlightedEntity(entityLooking);
                 } else
-                    setHighlightedEntity(null);
+                    homing$setHighlightedEntity(null);
             } else {
-                setHighlightedEntity(null);
-                setHomingReady();
+                homing$setHighlightedEntity(null);
+                homing$setHomingReady();
             }
         } else
-            setHighlightedEntity(null);
+            homing$setHighlightedEntity(null);
     }
 
     @Unique
-    private Entity getEntityLooking() {
+    private Entity homing$getEntityLooking() {
         // This function is "heavily inspired" by GameRenderer#updateTargetedEntity
         float homingRange = HomingAttack.config.homingRange;
 
@@ -89,36 +86,36 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnabl
         AABB box = camera.getBoundingBox().expandTowards(vec32.scale(homingRange)).inflate(1.0, 1.0, 1.0);
         EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(camera, vec3, vec33, box,
                 entity -> !entity.isSpectator() && entity.isPickable(), homingRange * homingRange);
-        if (entityHitResult != null && entityHitResult.getEntity().isAlive() && player.hasLineOfSight(entityHitResult.getEntity())) {
+        if (entityHitResult != null && entityHitResult.getEntity().isAlive() && Objects.requireNonNull(player).hasLineOfSight(entityHitResult.getEntity())) {
             return entityHitResult.getEntity();
         }
         return null;
     }
 
     @Unique
-    public Entity getHighlightedEntity() {
-        return highlightedEntity;
+    public Entity homing$getHighlightedEntity() {
+        return homing$highlightedEntity;
     }
 
     @Unique
-    public void setHighlightedEntity(Entity highlightedEntity) {
-        this.highlightedEntity = highlightedEntity;
+    public void homing$setHighlightedEntity(Entity highlightedEntity) {
+        this.homing$highlightedEntity = highlightedEntity;
     }
 
     @Unique
-    public void setHomingUnready() {
-        homingReady = false;
-        setHighlightedEntity(null);
+    public void homing$setHomingUnready() {
+        homing$homingReady = false;
+        homing$setHighlightedEntity(null);
     }
 
     @Unique
-    public void setHomingReady() {
-        homingReady = true;
+    public void homing$setHomingReady() {
+        homing$homingReady = true;
     }
 
     @Unique
-    public boolean isHomingReady() {
-        return homingReady;
+    public boolean homing$isHomingReady() {
+        return homing$homingReady;
     }
 
 }

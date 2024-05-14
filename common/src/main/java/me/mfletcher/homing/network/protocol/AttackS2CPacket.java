@@ -36,11 +36,11 @@ public class AttackS2CPacket {
 
             if (homingPlayer == null || Minecraft.getInstance().player == null) return;
             if (Minecraft.getInstance().player.equals(homingPlayer) && !isHoming)
-                ((IMinecraftMixin) Minecraft.getInstance()).setHomingReady();
+                ((IMinecraftMixin) Minecraft.getInstance()).homing$setHomingReady();
 
-            if (isHoming) ((IAbstractClientPlayerMixin) homingPlayer).startHomingAnimation();
+            if (isHoming) ((IAbstractClientPlayerMixin) homingPlayer).homing$startHomingAnimation();
             else
-                ((IAbstractClientPlayerMixin) homingPlayer).stopAnimations();
+                ((IAbstractClientPlayerMixin) homingPlayer).homing$stopAnimations();
 
         });
     }

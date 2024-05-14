@@ -3,9 +3,9 @@ package me.mfletcher.homing.mixinaccess;
 import net.minecraft.world.entity.Entity;
 
 public interface IServerPlayerMixin {
-    void doHoming(Entity entity);
+    void homing$doHoming(Entity entity);
 
-    Entity getHomingEntity();
+    Entity homing$getHomingEntity();
 
-    void setBoosting(boolean boosting);
+    void homing$setBoosting(boolean boosting);
 }

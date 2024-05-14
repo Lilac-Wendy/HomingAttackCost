@@ -4,13 +4,14 @@ import be.florens.expandability.api.forge.LivingFluidCollisionEvent;
 import dev.architectury.platform.forge.EventBuses;
 import me.mfletcher.homing.HomingAttack;
 import me.mfletcher.homing.ModConfig;
-import me.mfletcher.homing.PlayerHomingData;
+import me.mfletcher.homing.data.PlayerHomingData;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ConfigScreenHandler;
@@ -20,6 +21,8 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
+import java.io.IOException;
 
 @Mod(HomingAttack.MOD_ID)
 public final class HomingAttackForge {
@@ -43,8 +46,12 @@ public final class HomingAttackForge {
                 if (fluidState.is(FluidTags.LAVA) && !player.fireImmune() && !EnchantmentHelper.hasFrostWalker(player)) {
                     player.hurt(player.damageSources().hotFloor(), 1);
                 }
-                player.level().addParticle(ParticleTypes.SPLASH, player.getX(), player.getY(), player.getZ(), 0, 3, 0);
-                event.setResult(Event.Result.ALLOW);
+                try(Level level = player.level()) {
+                    level.addParticle(ParticleTypes.SPLASH, player.getX(), player.getY(), player.getZ(), 0, 3, 0);
+                    event.setResult(Event.Result.ALLOW);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             } else
                 event.setResult(Event.Result.DENY);
         } else

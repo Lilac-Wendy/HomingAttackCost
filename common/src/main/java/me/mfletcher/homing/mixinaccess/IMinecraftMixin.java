@@ -3,12 +3,12 @@ package me.mfletcher.homing.mixinaccess;
 import net.minecraft.world.entity.Entity;
 
 public interface IMinecraftMixin {
-    void setHomingReady();
+    void homing$setHomingReady();
 
-    void setHomingUnready();
+    void homing$setHomingUnready();
 
-    Entity getHighlightedEntity();
+    Entity homing$getHighlightedEntity();
 
-    boolean isHomingReady();
+    boolean homing$isHomingReady();
 
 }

@@ -2,9 +2,9 @@ package me.mfletcher.homing.mixinaccess;
 
 public interface IAbstractClientPlayerMixin {
 
-    void startHomingAnimation();
+    void homing$startHomingAnimation();
 
-    void stopAnimations();
+    void homing$stopAnimations();
 
-    void setBoosting(boolean boosting);
+    void homing$setBoosting(boolean boosting);
 }

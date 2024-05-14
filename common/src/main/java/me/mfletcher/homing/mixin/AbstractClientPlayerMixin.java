@@ -10,7 +10,7 @@ import dev.kosmx.playerAnim.core.util.Ease;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 import me.mfletcher.homing.HomingAttack;
-import me.mfletcher.homing.PlayerHomingData;
+import me.mfletcher.homing.data.PlayerHomingData;
 import me.mfletcher.homing.mixinaccess.IAbstractClientPlayerMixin;
 import me.mfletcher.homing.mixinaccess.IKeyboardInputMixin;
 import net.minecraft.client.Minecraft;
@@ -25,6 +25,8 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
+
+import java.util.Objects;
 
 @Mixin(AbstractClientPlayer.class)
 public abstract class AbstractClientPlayerMixin extends Player implements IAbstractClientPlayerMixin {
@@ -44,27 +46,30 @@ public abstract class AbstractClientPlayerMixin extends Player implements IAbstr
     }
 
     @Unique
-    public void startHomingAnimation() {
-        var animation = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) (Object) this).get(new ResourceLocation(HomingAttack.MOD_ID, "animation"));
+    public void homing$startHomingAnimation() {
+        @SuppressWarnings("unchecked") var animation = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) (Object) this).get(new ResourceLocation(HomingAttack.MOD_ID, "animation"));
+        //noinspection UnreachableCode
         if (animation != null) {
-            animation.setAnimation(new KeyframeAnimationPlayer(PlayerAnimationRegistry.getAnimation(new ResourceLocation(HomingAttack.MOD_ID, "spindash")))
+            animation.setAnimation(new KeyframeAnimationPlayer(Objects.requireNonNull(PlayerAnimationRegistry.getAnimation(new ResourceLocation(HomingAttack.MOD_ID, "spindash"))))
                     .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL));
             PlayerHomingData.setHoming(this, true);
         }
     }
 
     @Unique
-    public void startBoostAnimation() {
-        var animation = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) (Object) this).get(new ResourceLocation(HomingAttack.MOD_ID, "animation"));
+    public void homing$startBoostAnimation() {
+        @SuppressWarnings("unchecked") var animation = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) (Object) this).get(new ResourceLocation(HomingAttack.MOD_ID, "animation"));
+        //noinspection UnreachableCode
         if (animation != null) {
-            animation.setAnimation(new KeyframeAnimationPlayer(PlayerAnimationRegistry.getAnimation(new ResourceLocation(HomingAttack.MOD_ID, "boost")))
+            animation.setAnimation(new KeyframeAnimationPlayer(Objects.requireNonNull(PlayerAnimationRegistry.getAnimation(new ResourceLocation(HomingAttack.MOD_ID, "boost"))))
                     .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL));
         }
     }
 
     @Unique
-    public void stopAnimations() {
-        var animation = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) (Object) this).get(new ResourceLocation(HomingAttack.MOD_ID, "animation"));
+    public void homing$stopAnimations() {
+        @SuppressWarnings("unchecked") var animation = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) (Object) this).get(new ResourceLocation(HomingAttack.MOD_ID, "animation"));
+        //noinspection UnreachableCode
         if (animation != null) {
             animation.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(5, Ease.OUTEXPO), null);
         }
@@ -72,20 +77,20 @@ public abstract class AbstractClientPlayerMixin extends Player implements IAbstr
     }
 
     @Unique
-    public void setBoosting(boolean boosting) {
+    public void homing$setBoosting(boolean boosting) {
         if (PlayerHomingData.isBoosting(this) != boosting) {
             if (boosting) {
-                startBoostAnimation();
+                homing$startBoostAnimation();
             } else {
-                stopAnimations();
+                homing$stopAnimations();
             }
         }
 
 
         PlayerHomingData.setBoosting(this, boosting);
 
-        if (this.equals(Minecraft.getInstance().player)) {
-            ((IKeyboardInputMixin) Minecraft.getInstance().player.input).setBoosting(boosting);
+        if (this.getId() == Objects.requireNonNull(Minecraft.getInstance().player).getId()) {
+            ((IKeyboardInputMixin) Minecraft.getInstance().player.input).homing$setBoosting(boosting);
         }
     }
 }
