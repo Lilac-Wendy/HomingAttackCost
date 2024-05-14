@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "homing_attack",
+  "id": "homing",
   "version": "${version}",
   "name": "Homing Attack",
   "description": "Sonic's Homing Attack and Boost in Minecraft",
