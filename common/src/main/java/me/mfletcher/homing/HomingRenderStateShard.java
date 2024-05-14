@@ -15,13 +15,19 @@ public class HomingRenderStateShard extends RenderStateShard {
 
     // https://github.com/VazkiiMods/Neat/blob/master/Xplat/src/main/java/vazkii/neat/NeatRenderType.java
     public static final ResourceLocation RETICLE_0_TEXTURE = new ResourceLocation(HomingAttack.MOD_ID, "textures/ui/reticle_0.png");
-    public static final RenderType RETICLE_0_TYPE = getType(RETICLE_0_TEXTURE);
-
     public static final ResourceLocation RETICLE_1_TEXTURE = new ResourceLocation(HomingAttack.MOD_ID, "textures/ui/reticle_1.png");
-    public static final RenderType RETICLE_1_TYPE = getType(RETICLE_1_TEXTURE);
-
     public static final ResourceLocation RETICLE_2_TEXTURE = new ResourceLocation(HomingAttack.MOD_ID, "textures/ui/reticle_2.png");
-    public static final RenderType RETICLE_2_TYPE = getType(RETICLE_2_TEXTURE);
+    public static final ResourceLocation RETICLE_3_TEXTURE = new ResourceLocation(HomingAttack.MOD_ID, "textures/ui/reticle_3.png");
+    public static final ResourceLocation RETICLE_4_TEXTURE = new ResourceLocation(HomingAttack.MOD_ID, "textures/ui/reticle_4.png");
+    public static final ResourceLocation RETICLE_5_TEXTURE = new ResourceLocation(HomingAttack.MOD_ID, "textures/ui/reticle_5.png");
+    public static final RenderType[] RETICLE_TYPES = new RenderType[] {
+            getType(RETICLE_0_TEXTURE),
+            getType(RETICLE_1_TEXTURE),
+            getType(RETICLE_2_TEXTURE),
+            getType(RETICLE_3_TEXTURE),
+            getType(RETICLE_4_TEXTURE),
+            getType(RETICLE_5_TEXTURE)
+    };
 
     private static RenderType getType(ResourceLocation texture) {
         RenderType.CompositeState renderTypeState = RenderType.CompositeState.builder()

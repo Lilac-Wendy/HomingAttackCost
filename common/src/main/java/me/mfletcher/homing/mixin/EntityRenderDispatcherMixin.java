@@ -47,14 +47,8 @@ public abstract class EntityRenderDispatcherMixin {
         poseStack.translate(dx, livingEntity.getBbHeight() / 2, dz);
         poseStack.mulPose(cameraOrientation());
 
-        VertexConsumer builder;
         int i = p.tickCount % 6;
-        if(i == 0 || i == 1)
-            builder = buffers.getBuffer(HomingRenderStateShard.RETICLE_0_TYPE);
-        else if(i == 2 || i == 3)
-            builder = buffers.getBuffer(HomingRenderStateShard.RETICLE_1_TYPE);
-        else
-            builder = buffers.getBuffer(HomingRenderStateShard.RETICLE_2_TYPE);
+        VertexConsumer builder = buffers.getBuffer(HomingRenderStateShard.RETICLE_TYPES[i]);
 
         builder.vertex(poseStack.last().pose(), -size, -size, 0.01F).color(0, 255, 0, 255).uv(0.0F, 0.0F).uv2(light).endVertex();
         builder.vertex(poseStack.last().pose(), -size, size, 0.01F).color(0, 255, 0, 255).uv(0.0F, 1F).uv2(light).endVertex();
