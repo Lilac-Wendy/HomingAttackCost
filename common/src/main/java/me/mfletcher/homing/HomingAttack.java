@@ -6,12 +6,16 @@ import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationFactory;
+import me.mfletcher.homing.block.HomingBlocks;
+import me.mfletcher.homing.item.HomingCreativeTabs;
+import me.mfletcher.homing.item.HomingItems;
 import me.mfletcher.homing.mixinaccess.IAbstractClientPlayerMixin;
 import me.mfletcher.homing.mixinaccess.IMinecraftMixin;
 import me.mfletcher.homing.network.HomingMessages;
 import me.mfletcher.homing.network.protocol.AttackC2SPacket;
 import me.mfletcher.homing.network.protocol.BoostC2SPacket;
 import me.mfletcher.homing.network.protocol.ConfigSyncS2CPacket;
+import me.mfletcher.homing.sounds.HomingSounds;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.minecraft.client.Minecraft;
@@ -25,8 +29,11 @@ public final class HomingAttack {
 
     public static void init() {
         // Write common init code here.
-        HomingMessages.init();
-        HomingSounds.init();
+        HomingMessages.register();
+        HomingSounds.register();
+        HomingBlocks.register();
+        HomingItems.register();
+        HomingCreativeTabs.register();
         AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
         config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
@@ -47,7 +54,7 @@ public final class HomingAttack {
                 Entity entity = ((IMinecraftMixin) Minecraft.getInstance()).getHighlightedEntity();
                 if (entity != null) {
                     HomingMessages.sendToServer(new AttackC2SPacket(((IMinecraftMixin) Minecraft.getInstance()).getHighlightedEntity().getId()));
-                    ((IMinecraftMixin)Minecraft.getInstance()).setHomingUnready();
+                    ((IMinecraftMixin) Minecraft.getInstance()).setHomingUnready();
                 }
             }
             if (HomingConstants.BOOST_KEY.isDown() && !PlayerHomingData.isBoosting(Minecraft.getInstance().player)

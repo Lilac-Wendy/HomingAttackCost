@@ -9,7 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 public class HomingMessages {
     public static final NetworkChannel CHANNEL = NetworkChannel.create(new ResourceLocation(HomingAttack.MOD_ID, "networking_channel"));
 
-    public static void init() {
+    public static void register() {
         // Register messages here
         CHANNEL.register(AttackC2SPacket.class, AttackC2SPacket::encode, AttackC2SPacket::new, AttackC2SPacket::apply);
         CHANNEL.register(AttackS2CPacket.class, AttackS2CPacket::encode, AttackS2CPacket::new, AttackS2CPacket::apply);

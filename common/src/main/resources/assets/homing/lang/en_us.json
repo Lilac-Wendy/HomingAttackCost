@@ -10,5 +10,8 @@
   "text.autoconfig.assets.homing.option.defenseHomingDamageMultiplier": "Armor defense homing damage multiplier",
   "text.autoconfig.assets.homing.option.toughnessHomingDamageMultiplier": "Armor defense homing damage multiplier",
   "text.autoconfig.assets.homing.option.boostLevel.@Tooltip": "(Speed effect level)",
-  "text.autoconfig.assets.homing.option.reticleVolume": "Reticle beep volume"
+  "text.autoconfig.assets.homing.option.reticleVolume": "Reticle beep volume",
+
+  "item.homing.chaos_emeralds": "Chaos Emeralds",
+  "block.homing.dash_panel": "Dash Panel"
 }
