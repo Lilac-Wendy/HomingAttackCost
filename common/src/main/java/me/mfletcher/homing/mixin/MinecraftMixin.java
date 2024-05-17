@@ -2,7 +2,7 @@ package me.mfletcher.homing.mixin;
 
 import com.mojang.blaze3d.platform.WindowEventHandler;
 import me.mfletcher.homing.HomingAttack;
-import me.mfletcher.homing.HomingSounds;
+import me.mfletcher.homing.sounds.HomingSounds;
 import me.mfletcher.homing.mixinaccess.IMinecraftMixin;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;

@@ -1,6 +1,7 @@
-package me.mfletcher.homing;
+package me.mfletcher.homing.client.renderer;
 
 import com.mojang.blaze3d.vertex.VertexFormat;
+import me.mfletcher.homing.HomingAttack;
 import me.mfletcher.homing.mixin.AccessorRenderType;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;

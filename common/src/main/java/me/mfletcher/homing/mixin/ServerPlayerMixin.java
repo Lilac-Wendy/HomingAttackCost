@@ -2,7 +2,7 @@ package me.mfletcher.homing.mixin;
 
 import com.mojang.authlib.GameProfile;
 import me.mfletcher.homing.HomingAttack;
-import me.mfletcher.homing.HomingSounds;
+import me.mfletcher.homing.sounds.HomingSounds;
 import me.mfletcher.homing.PlayerHomingAttackInfo;
 import me.mfletcher.homing.PlayerHomingData;
 import me.mfletcher.homing.mixinaccess.IServerPlayerMixin;

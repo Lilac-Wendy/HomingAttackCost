@@ -2,7 +2,7 @@ package me.mfletcher.homing.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import me.mfletcher.homing.HomingRenderStateShard;
+import me.mfletcher.homing.client.renderer.HomingRenderStateShard;
 import me.mfletcher.homing.mixinaccess.IMinecraftMixin;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
