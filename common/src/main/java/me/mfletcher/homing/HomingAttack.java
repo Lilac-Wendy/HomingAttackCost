@@ -4,9 +4,8 @@ import dev.architectury.event.events.client.ClientLifecycleEvent;
 import dev.architectury.event.events.client.ClientTickEvent;
 import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
-import dev.kosmx.playerAnim.api.layered.ModifierLayer;
-import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationFactory;
 import me.mfletcher.homing.block.HomingBlocks;
+import me.mfletcher.homing.client.animation.HomingAnimation;
 import me.mfletcher.homing.item.HomingCreativeTabs;
 import me.mfletcher.homing.item.HomingItems;
 import me.mfletcher.homing.mixin.access.IAbstractClientPlayerMixin;
@@ -20,7 +19,6 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 
 public final class HomingAttack {
@@ -42,10 +40,7 @@ public final class HomingAttack {
             KeyMappingRegistry.register(HomingConstants.HOMING_KEY);
             KeyMappingRegistry.register(HomingConstants.BOOST_KEY);
 
-            PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(
-                    new ResourceLocation(HomingAttack.MOD_ID, "animation"),
-                    42,
-                    (abstractClientPlayer) -> new ModifierLayer<>());
+            HomingAnimation.register();
         });
 
         PlayerEvent.PLAYER_JOIN.register(localPlayer -> HomingMessages.sendToPlayer(new ConfigSyncS2CPacket(config), localPlayer));
