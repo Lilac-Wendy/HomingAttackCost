@@ -1,4 +1,4 @@
-package me.mfletcher.homing.mixin;
+package me.mfletcher.homing.mixin.mixins.client;
 
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.RenderType;

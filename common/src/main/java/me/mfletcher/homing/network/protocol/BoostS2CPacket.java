@@ -1,7 +1,7 @@
 package me.mfletcher.homing.network.protocol;
 
 import dev.architectury.networking.NetworkManager;
-import me.mfletcher.homing.mixinaccess.IAbstractClientPlayerMixin;
+import me.mfletcher.homing.mixin.access.IAbstractClientPlayerMixin;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
@@ -32,7 +32,7 @@ public class BoostS2CPacket {
             // Running on client
             Player boostPlayer = (Player) Minecraft.getInstance().level.getEntity(this.boostPlayerId);
             if (boostPlayer == null || Minecraft.getInstance().player == null) return;
-            ((IAbstractClientPlayerMixin) boostPlayer).setBoosting(isBoosting);
+            ((IAbstractClientPlayerMixin) boostPlayer).homing$setBoosting(isBoosting);
         });
     }
 }

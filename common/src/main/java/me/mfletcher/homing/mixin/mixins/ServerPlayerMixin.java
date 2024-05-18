@@ -1,11 +1,11 @@
-package me.mfletcher.homing.mixin;
+package me.mfletcher.homing.mixin.mixins;
 
 import com.mojang.authlib.GameProfile;
 import me.mfletcher.homing.HomingAttack;
 import me.mfletcher.homing.sounds.HomingSounds;
 import me.mfletcher.homing.PlayerHomingAttackInfo;
 import me.mfletcher.homing.PlayerHomingData;
-import me.mfletcher.homing.mixinaccess.IServerPlayerMixin;
+import me.mfletcher.homing.mixin.access.IServerPlayerMixin;
 import me.mfletcher.homing.network.HomingMessages;
 import me.mfletcher.homing.network.protocol.BoostS2CPacket;
 import net.minecraft.core.BlockPos;
@@ -39,10 +39,10 @@ public abstract class ServerPlayerMixin extends Player implements IServerPlayerM
 
     @Unique
     @Nullable
-    private PlayerHomingAttackInfo playerHomingAttackInfo = null;
+    private PlayerHomingAttackInfo homing$playerHomingAttackInfo = null;
 
     @Unique
-    private final MobEffectInstance speedEffect = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20,
+    private final MobEffectInstance homing$speedEffect = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20,
             HomingAttack.config.boostLevel, false, false, false);
 
 
@@ -52,9 +52,9 @@ public abstract class ServerPlayerMixin extends Player implements IServerPlayerM
 
     @Override
     public void travel(Vec3 movementInput) {
-        if (playerHomingAttackInfo == null) {
+        if (homing$playerHomingAttackInfo == null) {
             if (PlayerHomingData.isBoosting(this)) {
-                addEffect(speedEffect);
+                addEffect(homing$speedEffect);
                 causeFoodExhaustion(0.05F);
                 super.travel(new Vec3(0, 0, 1));
             } else super.travel(movementInput);
@@ -63,38 +63,38 @@ public abstract class ServerPlayerMixin extends Player implements IServerPlayerM
 
     @Inject(method = "setPlayerInput", at = @At("HEAD"), cancellable = true)
     public void onUpdateInput(CallbackInfo ci) {
-        if (playerHomingAttackInfo != null)
+        if (homing$playerHomingAttackInfo != null)
             ci.cancel();
     }
 
     @Unique
-    public void doHoming(Entity entity) {
-        if (entity.distanceTo(this) <= HomingAttack.config.homingRange && playerHomingAttackInfo == null) {
+    public void homing$doHoming(Entity entity) {
+        if (entity.distanceTo(this) <= HomingAttack.config.homingRange && homing$playerHomingAttackInfo == null) {
             level().playSound(null, blockPosition(), HomingSounds.HOMING.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
-            playerHomingAttackInfo = new PlayerHomingAttackInfo((ServerPlayer) (Player) this, entity);
+            homing$playerHomingAttackInfo = new PlayerHomingAttackInfo((ServerPlayer) (Player) this, entity);
         } else
-            LOGGER.error("Homing attack failed: " + playerHomingAttackInfo);
+            LOGGER.error("Homing attack failed: " + homing$playerHomingAttackInfo);
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
     public void onTick(CallbackInfo ci) {
-        if (playerHomingAttackInfo != null)
-            if (!playerHomingAttackInfo.tick())
-                playerHomingAttackInfo = null;
+        if (homing$playerHomingAttackInfo != null)
+            if (!homing$playerHomingAttackInfo.tick())
+                homing$playerHomingAttackInfo = null;
     }
 
     @Unique
-    public Entity getHomingEntity() {
-        if (playerHomingAttackInfo != null)
-            return playerHomingAttackInfo.getTarget();
+    public Entity homing$getHomingEntity() {
+        if (homing$playerHomingAttackInfo != null)
+            return homing$playerHomingAttackInfo.getTarget();
         return null;
     }
 
     @Unique
-    public void setBoosting(boolean boosting) {
+    public void homing$setBoosting(boolean boosting) {
         PlayerHomingData.setBoosting(this, boosting);
         if (!boosting)
-            removeEffect(speedEffect.getEffect());
+            removeEffect(homing$speedEffect.getEffect());
         else
             level().playSound(null, blockPosition(), HomingSounds.BOOST.get(), SoundSource.PLAYERS, 0.8F, 1.0F);
         for (Player p : level().players())
@@ -102,10 +102,5 @@ public abstract class ServerPlayerMixin extends Player implements IServerPlayerM
                 HomingMessages.sendToPlayer(new BoostS2CPacket(getId(), PlayerHomingData.isBoosting(this)), (ServerPlayer) p);
             }
 
-    }
-
-    @Unique
-    public PlayerHomingAttackInfo getPlayerHomingAttackInfo() {
-        return playerHomingAttackInfo;
     }
 }

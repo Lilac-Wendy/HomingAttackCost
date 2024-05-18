@@ -1,6 +1,6 @@
-package me.mfletcher.homing.mixin;
+package me.mfletcher.homing.mixin.mixins.client;
 
-import me.mfletcher.homing.mixinaccess.IKeyboardInputMixin;
+import me.mfletcher.homing.mixin.access.IKeyboardInputMixin;
 import net.minecraft.client.Options;
 import net.minecraft.client.player.Input;
 import net.minecraft.client.player.KeyboardInput;
@@ -21,11 +21,11 @@ public abstract class KeyboardInputMixin extends Input implements IKeyboardInput
     private Options options;
 
     @Unique
-    private boolean isBoosting;
+    private boolean homing$isBoosting;
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     public void onTick(CallbackInfo ci) {
-        if (isBoosting) {
+        if (homing$isBoosting) {
             this.up = true;
             this.down = false;
             this.left = false;
@@ -39,8 +39,8 @@ public abstract class KeyboardInputMixin extends Input implements IKeyboardInput
     }
 
     @Unique
-    public void setBoosting(boolean isBoosting) {
-        this.isBoosting = isBoosting;
+    public void homing$setBoosting(boolean isBoosting) {
+        this.homing$isBoosting = isBoosting;
     }
 
 }

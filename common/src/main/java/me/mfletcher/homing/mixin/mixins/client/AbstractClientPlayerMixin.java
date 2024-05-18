@@ -1,4 +1,4 @@
-package me.mfletcher.homing.mixin;
+package me.mfletcher.homing.mixin.mixins.client;
 
 import com.mojang.authlib.GameProfile;
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode;
@@ -11,8 +11,8 @@ import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 import me.mfletcher.homing.HomingAttack;
 import me.mfletcher.homing.PlayerHomingData;
-import me.mfletcher.homing.mixinaccess.IAbstractClientPlayerMixin;
-import me.mfletcher.homing.mixinaccess.IKeyboardInputMixin;
+import me.mfletcher.homing.mixin.access.IAbstractClientPlayerMixin;
+import me.mfletcher.homing.mixin.access.IKeyboardInputMixin;
 import me.mfletcher.homing.sounds.HomingSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -37,7 +37,7 @@ public abstract class AbstractClientPlayerMixin extends Player implements IAbstr
     public ClientLevel clientLevel;
 
     @Unique
-    private final SoundInstance boostSound = new SimpleSoundInstance(HomingSounds.BOOST_2.get(), SoundSource.PLAYERS, 0.8f, 1, SoundInstance.createUnseededRandom(), blockPosition());
+    private final SoundInstance homing$boostSound = new SimpleSoundInstance(HomingSounds.BOOST_2.get(), SoundSource.PLAYERS, 0.8f, 1, SoundInstance.createUnseededRandom(), blockPosition());
 
     public AbstractClientPlayerMixin(Level level, BlockPos pos, float yaw, GameProfile gameProfile) {
         super(level, pos, yaw, gameProfile);
@@ -51,7 +51,7 @@ public abstract class AbstractClientPlayerMixin extends Player implements IAbstr
     }
 
     @Unique
-    public void startHomingAnimation() {
+    public void homing$startHomingAnimation() {
         var animation = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) (Object) this).get(new ResourceLocation(HomingAttack.MOD_ID, "animation"));
         if (animation != null) {
             animation.setAnimation(new KeyframeAnimationPlayer(PlayerAnimationRegistry.getAnimation(new ResourceLocation(HomingAttack.MOD_ID, "spindash")))
@@ -61,7 +61,7 @@ public abstract class AbstractClientPlayerMixin extends Player implements IAbstr
     }
 
     @Unique
-    public void startBoostAnimation() {
+    public void homing$startBoostAnimation() {
         var animation = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) (Object) this).get(new ResourceLocation(HomingAttack.MOD_ID, "animation"));
         if (animation != null) {
             animation.setAnimation(new KeyframeAnimationPlayer(PlayerAnimationRegistry.getAnimation(new ResourceLocation(HomingAttack.MOD_ID, "boost")))
@@ -70,7 +70,7 @@ public abstract class AbstractClientPlayerMixin extends Player implements IAbstr
     }
 
     @Unique
-    public void stopAnimations() {
+    public void homing$stopAnimations() {
         var animation = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) (Object) this).get(new ResourceLocation(HomingAttack.MOD_ID, "animation"));
         if (animation != null) {
             animation.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(5, Ease.OUTEXPO), null);
@@ -79,12 +79,12 @@ public abstract class AbstractClientPlayerMixin extends Player implements IAbstr
     }
 
     @Unique
-    public void setBoosting(boolean boosting) {
+    public void homing$setBoosting(boolean boosting) {
         if (PlayerHomingData.isBoosting(this) != boosting) {
             if (boosting) {
-                startBoostAnimation();
+                homing$startBoostAnimation();
             } else {
-                stopAnimations();
+                homing$stopAnimations();
             }
         }
 
@@ -92,11 +92,11 @@ public abstract class AbstractClientPlayerMixin extends Player implements IAbstr
         PlayerHomingData.setBoosting(this, boosting);
 
         if (this.equals(Minecraft.getInstance().player)) {
-            ((IKeyboardInputMixin) Minecraft.getInstance().player.input).setBoosting(boosting);
+            ((IKeyboardInputMixin) Minecraft.getInstance().player.input).homing$setBoosting(boosting);
             if (boosting)
-                Minecraft.getInstance().getSoundManager().play(boostSound);
+                Minecraft.getInstance().getSoundManager().play(homing$boostSound);
             else
-                Minecraft.getInstance().getSoundManager().stop(boostSound);
+                Minecraft.getInstance().getSoundManager().stop(homing$boostSound);
         }
     }
 }

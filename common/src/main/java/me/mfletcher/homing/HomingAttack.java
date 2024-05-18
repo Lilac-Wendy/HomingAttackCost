@@ -9,8 +9,8 @@ import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationFactory;
 import me.mfletcher.homing.block.HomingBlocks;
 import me.mfletcher.homing.item.HomingCreativeTabs;
 import me.mfletcher.homing.item.HomingItems;
-import me.mfletcher.homing.mixinaccess.IAbstractClientPlayerMixin;
-import me.mfletcher.homing.mixinaccess.IMinecraftMixin;
+import me.mfletcher.homing.mixin.access.IAbstractClientPlayerMixin;
+import me.mfletcher.homing.mixin.access.IMinecraftMixin;
 import me.mfletcher.homing.network.HomingMessages;
 import me.mfletcher.homing.network.protocol.AttackC2SPacket;
 import me.mfletcher.homing.network.protocol.BoostC2SPacket;
@@ -51,22 +51,22 @@ public final class HomingAttack {
 
         ClientTickEvent.CLIENT_LEVEL_POST.register(minecraft -> {
             if (HomingConstants.HOMING_KEY.consumeClick()) {
-                Entity entity = ((IMinecraftMixin) Minecraft.getInstance()).getHighlightedEntity();
+                Entity entity = ((IMinecraftMixin) Minecraft.getInstance()).homing$getHighlightedEntity();
                 if (entity != null) {
-                    HomingMessages.sendToServer(new AttackC2SPacket(((IMinecraftMixin) Minecraft.getInstance()).getHighlightedEntity().getId()));
-                    ((IMinecraftMixin) Minecraft.getInstance()).setHomingUnready();
+                    HomingMessages.sendToServer(new AttackC2SPacket(((IMinecraftMixin) Minecraft.getInstance()).homing$getHighlightedEntity().getId()));
+                    ((IMinecraftMixin) Minecraft.getInstance()).homing$setHomingUnready();
                 }
             }
             if (HomingConstants.BOOST_KEY.isDown() && !PlayerHomingData.isBoosting(Minecraft.getInstance().player)
                     && Minecraft.getInstance().player.mainSupportingBlockPos.isPresent() && Minecraft.getInstance().player.getFoodData().getFoodLevel() > 6
                     && !Minecraft.getInstance().player.isUsingItem()) {
                 HomingMessages.sendToServer(new BoostC2SPacket(true));
-                ((IAbstractClientPlayerMixin) Minecraft.getInstance().player).setBoosting(true);
+                ((IAbstractClientPlayerMixin) Minecraft.getInstance().player).homing$setBoosting(true);
             } else if (PlayerHomingData.isBoosting(Minecraft.getInstance().player)
                     && (!HomingConstants.BOOST_KEY.isDown() || Minecraft.getInstance().player.getFoodData().getFoodLevel() <= 6
                     || Minecraft.getInstance().player.isUsingItem())) {
                 HomingMessages.sendToServer(new BoostC2SPacket(false));
-                ((IAbstractClientPlayerMixin) Minecraft.getInstance().player).setBoosting(false);
+                ((IAbstractClientPlayerMixin) Minecraft.getInstance().player).homing$setBoosting(false);
             }
         });
     }

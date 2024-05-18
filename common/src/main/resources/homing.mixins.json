@@ -1,13 +1,13 @@
 {
   "required": true,
-  "package": "me.mfletcher.homing.mixin",
+  "package": "me.mfletcher.homing.mixin.mixins",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "client": [
-    "AbstractClientPlayerMixin",
-    "AccessorRenderType",
-    "EntityRenderDispatcherMixin",
-    "KeyboardInputMixin"
+    "client.AbstractClientPlayerMixin",
+    "client.AccessorRenderType",
+    "client.EntityRenderDispatcherMixin",
+    "client.KeyboardInputMixin"
   ],
   "mixins": [
     "MinecraftMixin",

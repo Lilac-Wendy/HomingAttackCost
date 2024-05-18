@@ -1,8 +1,8 @@
 package me.mfletcher.homing.network.protocol;
 
 import dev.architectury.networking.NetworkManager;
-import me.mfletcher.homing.mixinaccess.IAbstractClientPlayerMixin;
-import me.mfletcher.homing.mixinaccess.IMinecraftMixin;
+import me.mfletcher.homing.mixin.access.IAbstractClientPlayerMixin;
+import me.mfletcher.homing.mixin.access.IMinecraftMixin;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
@@ -36,11 +36,11 @@ public class AttackS2CPacket {
 
             if (homingPlayer == null || Minecraft.getInstance().player == null) return;
             if (Minecraft.getInstance().player.equals(homingPlayer) && !isHoming)
-                ((IMinecraftMixin) Minecraft.getInstance()).setHomingReady();
+                ((IMinecraftMixin) Minecraft.getInstance()).homing$setHomingReady();
 
-            if (isHoming) ((IAbstractClientPlayerMixin) homingPlayer).startHomingAnimation();
+            if (isHoming) ((IAbstractClientPlayerMixin) homingPlayer).homing$startHomingAnimation();
             else
-                ((IAbstractClientPlayerMixin) homingPlayer).stopAnimations();
+                ((IAbstractClientPlayerMixin) homingPlayer).homing$stopAnimations();
 
         });
     }

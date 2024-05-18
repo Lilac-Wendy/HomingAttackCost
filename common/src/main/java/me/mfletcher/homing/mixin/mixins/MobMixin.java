@@ -1,6 +1,6 @@
-package me.mfletcher.homing.mixin;
+package me.mfletcher.homing.mixin.mixins;
 
-import me.mfletcher.homing.mixinaccess.IServerPlayerMixin;
+import me.mfletcher.homing.mixin.access.IServerPlayerMixin;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
@@ -19,7 +19,7 @@ public abstract class MobMixin extends LivingEntity implements Targeting {
     public void onTryAttack(Entity target, CallbackInfoReturnable<Boolean> cir) {
         if (target instanceof ServerPlayer
 //                && ((Player) target).getArmorValue() != 0
-                && this.equals(((IServerPlayerMixin) target).getHomingEntity()))
+                && this.equals(((IServerPlayerMixin) target).homing$getHomingEntity()))
             cir.setReturnValue(false);
     }
 }

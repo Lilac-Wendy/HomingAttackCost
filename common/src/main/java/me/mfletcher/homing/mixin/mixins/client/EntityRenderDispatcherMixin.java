@@ -1,9 +1,9 @@
-package me.mfletcher.homing.mixin;
+package me.mfletcher.homing.mixin.mixins.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import me.mfletcher.homing.client.renderer.HomingRenderStateShard;
-import me.mfletcher.homing.mixinaccess.IMinecraftMixin;
+import me.mfletcher.homing.mixin.access.IMinecraftMixin;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -32,7 +32,7 @@ public abstract class EntityRenderDispatcherMixin {
     private void onRender(Entity entity, double worldX, double worldY, double worldZ, float entityYRot, float partialTicks, PoseStack poseStack, MultiBufferSource buffers, int light, CallbackInfo ci) {
         // https://github.com/VazkiiMods/Neat/blob/master/Xplat/src/main/java/vazkii/neat/HealthBarRenderer.java
         float size = 1;
-        if (!(entity instanceof LivingEntity livingEntity) || !((IMinecraftMixin) Minecraft.getInstance()).isHomingReady() || ((IMinecraftMixin) Minecraft.getInstance()).getHighlightedEntity() != livingEntity)
+        if (!(entity instanceof LivingEntity livingEntity) || !((IMinecraftMixin) Minecraft.getInstance()).homing$isHomingReady() || ((IMinecraftMixin) Minecraft.getInstance()).homing$getHighlightedEntity() != livingEntity)
             return;
 
         LocalPlayer p = Minecraft.getInstance().player;
