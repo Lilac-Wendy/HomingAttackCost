@@ -83,10 +83,8 @@ public abstract class AbstractClientPlayerMixin extends Player implements IAbstr
         if (PlayerHomingData.isBoosting(this) != boosting) {
             if (boosting) {
                 startBoostAnimation();
-                Minecraft.getInstance().getSoundManager().play(boostSound);
             } else {
                 stopAnimations();
-                Minecraft.getInstance().getSoundManager().stop(boostSound);
             }
         }
 
@@ -95,6 +93,10 @@ public abstract class AbstractClientPlayerMixin extends Player implements IAbstr
 
         if (this.equals(Minecraft.getInstance().player)) {
             ((IKeyboardInputMixin) Minecraft.getInstance().player.input).setBoosting(boosting);
+            if (boosting)
+                Minecraft.getInstance().getSoundManager().play(boostSound);
+            else
+                Minecraft.getInstance().getSoundManager().stop(boostSound);
         }
     }
 }
