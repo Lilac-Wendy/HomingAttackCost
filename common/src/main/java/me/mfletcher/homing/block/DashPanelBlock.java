@@ -3,7 +3,6 @@ package me.mfletcher.homing.block;
 import me.mfletcher.homing.sounds.HomingSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -24,13 +23,15 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class DashPanelBlock extends Block {
+public class DashPanelBlock extends Block implements SimpleWaterloggedBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     private static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 1, 15);
 
     public DashPanelBlock(Properties properties) {
         super(properties);
+        registerDefaultState(getStateDefinition().any().setValue(WATERLOGGED, false));
     }
 
     @Override
@@ -45,7 +46,7 @@ public class DashPanelBlock extends Block {
 
         rotation = (float) Math.toRadians(rotation + 90);
         int dashSpeed = 10;
-        entity.setDeltaMovement(Math.cos(rotation)* dashSpeed, 0, Math.sin(rotation)* dashSpeed);
+        entity.setDeltaMovement(Math.cos(rotation) * dashSpeed, 0, Math.sin(rotation) * dashSpeed);
         entity.hasImpulse = true;
         entity.hurtMarked = true;
 
@@ -70,7 +71,8 @@ public class DashPanelBlock extends Block {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+        FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
     }
 
     @Override
@@ -85,6 +87,14 @@ public class DashPanelBlock extends Block {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING, WATERLOGGED);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        if (state.getValue(WATERLOGGED).booleanValue()) {
+            return Fluids.WATER.getSource(false);
+        }
+        return super.getFluidState(state);
     }
 }
