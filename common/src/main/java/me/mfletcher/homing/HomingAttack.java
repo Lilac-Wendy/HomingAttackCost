@@ -19,6 +19,7 @@ import me.mfletcher.homing.sounds.HomingSounds;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 
@@ -50,6 +51,8 @@ public final class HomingAttack {
         PlayerEvent.PLAYER_JOIN.register(localPlayer -> HomingMessages.sendToPlayer(new ConfigSyncS2CPacket(config), localPlayer));
 
         ClientTickEvent.CLIENT_LEVEL_POST.register(minecraft -> {
+            LocalPlayer player = Minecraft.getInstance().player;
+            if (player == null) return;
             if (HomingConstants.HOMING_KEY.consumeClick()) {
                 Entity entity = ((IMinecraftMixin) Minecraft.getInstance()).homing$getHighlightedEntity();
                 if (entity != null) {
@@ -57,16 +60,16 @@ public final class HomingAttack {
                     ((IMinecraftMixin) Minecraft.getInstance()).homing$setHomingUnready();
                 }
             }
-            if (HomingConstants.BOOST_KEY.isDown() && !PlayerHomingData.isBoosting(Minecraft.getInstance().player)
-                    && Minecraft.getInstance().player.mainSupportingBlockPos.isPresent() && Minecraft.getInstance().player.getFoodData().getFoodLevel() > 6
-                    && !Minecraft.getInstance().player.isUsingItem()) {
+            if (HomingConstants.BOOST_KEY.isDown() && !PlayerHomingData.isBoosting(player)
+                    && player.mainSupportingBlockPos.isPresent() && player.getFoodData().getFoodLevel() > 6
+                    && !player.isUsingItem()) {
                 HomingMessages.sendToServer(new BoostC2SPacket(true));
-                ((IAbstractClientPlayerMixin) Minecraft.getInstance().player).homing$setBoosting(true);
-            } else if (PlayerHomingData.isBoosting(Minecraft.getInstance().player)
-                    && (!HomingConstants.BOOST_KEY.isDown() || Minecraft.getInstance().player.getFoodData().getFoodLevel() <= 6
-                    || Minecraft.getInstance().player.isUsingItem())) {
+                ((IAbstractClientPlayerMixin) player).homing$setBoosting(true);
+            } else if (PlayerHomingData.isBoosting(player)
+                    && (!HomingConstants.BOOST_KEY.isDown() || player.getFoodData().getFoodLevel() <= 6
+                    || player.isUsingItem())) {
                 HomingMessages.sendToServer(new BoostC2SPacket(false));
-                ((IAbstractClientPlayerMixin) Minecraft.getInstance().player).homing$setBoosting(false);
+                ((IAbstractClientPlayerMixin) player).homing$setBoosting(false);
             }
         });
     }

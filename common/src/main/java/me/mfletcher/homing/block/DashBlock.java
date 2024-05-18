@@ -1,9 +1,6 @@
 package me.mfletcher.homing.block;
 
-import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -24,6 +21,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public abstract class DashBlock extends Block implements SimpleWaterloggedBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -64,7 +62,7 @@ public abstract class DashBlock extends Block implements SimpleWaterloggedBlock 
     }
 
     @Override
-    public BlockState mirror(BlockState state, Mirror mirror) {
+    public @NotNull BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
@@ -74,8 +72,8 @@ public abstract class DashBlock extends Block implements SimpleWaterloggedBlock 
     }
 
     @Override
-    public FluidState getFluidState(BlockState state) {
-        if (state.getValue(WATERLOGGED).booleanValue()) {
+    public @NotNull FluidState getFluidState(BlockState state) {
+        if (state.getValue(WATERLOGGED)) {
             return Fluids.WATER.getSource(false);
         }
         return super.getFluidState(state);

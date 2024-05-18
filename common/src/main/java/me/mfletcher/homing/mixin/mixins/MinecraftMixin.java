@@ -2,8 +2,8 @@ package me.mfletcher.homing.mixin.mixins;
 
 import com.mojang.blaze3d.platform.WindowEventHandler;
 import me.mfletcher.homing.HomingAttack;
-import me.mfletcher.homing.sounds.HomingSounds;
 import me.mfletcher.homing.mixin.access.IMinecraftMixin;
+import me.mfletcher.homing.sounds.HomingSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -89,8 +89,11 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnabl
         AABB box = camera.getBoundingBox().expandTowards(vec32.scale(homingRange)).inflate(1.0, 1.0, 1.0);
         EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(camera, vec3, vec33, box,
                 entity -> !entity.isSpectator() && entity.isPickable(), homingRange * homingRange);
-        if (entityHitResult != null && entityHitResult.getEntity().isAlive() && player.hasLineOfSight(entityHitResult.getEntity())) {
-            return entityHitResult.getEntity();
+        if (entityHitResult != null && entityHitResult.getEntity().isAlive()) {
+            assert player != null;
+            if (player.hasLineOfSight(entityHitResult.getEntity())) {
+                return entityHitResult.getEntity();
+            }
         }
         return null;
     }

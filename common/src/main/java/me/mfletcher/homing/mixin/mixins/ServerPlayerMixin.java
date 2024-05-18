@@ -2,12 +2,12 @@ package me.mfletcher.homing.mixin.mixins;
 
 import com.mojang.authlib.GameProfile;
 import me.mfletcher.homing.HomingAttack;
-import me.mfletcher.homing.sounds.HomingSounds;
 import me.mfletcher.homing.PlayerHomingAttackInfo;
 import me.mfletcher.homing.PlayerHomingData;
 import me.mfletcher.homing.mixin.access.IServerPlayerMixin;
 import me.mfletcher.homing.network.HomingMessages;
 import me.mfletcher.homing.network.protocol.BoostS2CPacket;
+import me.mfletcher.homing.sounds.HomingSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -73,7 +73,7 @@ public abstract class ServerPlayerMixin extends Player implements IServerPlayerM
             level().playSound(null, blockPosition(), HomingSounds.HOMING.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
             homing$playerHomingAttackInfo = new PlayerHomingAttackInfo((ServerPlayer) (Player) this, entity);
         } else
-            LOGGER.error("Homing attack failed: " + homing$playerHomingAttackInfo);
+            LOGGER.error("Homing attack failed: {}", homing$playerHomingAttackInfo);
     }
 
     @Inject(method = "tick", at = @At("TAIL"))

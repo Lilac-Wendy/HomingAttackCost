@@ -8,7 +8,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import java.util.function.Supplier;
 
 public class ConfigSyncS2CPacket {
-    private int homingRange;
+    private final int homingRange;
 
     public ConfigSyncS2CPacket(ModConfig config) {
         this.homingRange = config.homingRange;

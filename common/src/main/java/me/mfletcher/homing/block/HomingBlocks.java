@@ -24,8 +24,9 @@ public class HomingBlocks {
         return toReturn;
     }
 
-    private static <T extends Block> RegistrySupplier<Item> registerBlockItem(ResourceLocation name, RegistrySupplier<T> block) {
-        return HomingItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().arch$tab(HomingCreativeTabs.MY_TAB)));
+    @SuppressWarnings("UnstableApiUsage")
+    private static <T extends Block> void registerBlockItem(ResourceLocation name, RegistrySupplier<T> block) {
+        HomingItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().arch$tab(HomingCreativeTabs.MY_TAB)));
     }
 
     public static final Supplier<RegistrarManager> MANAGER = Suppliers.memoize(() -> RegistrarManager.get(HomingAttack.MOD_ID));

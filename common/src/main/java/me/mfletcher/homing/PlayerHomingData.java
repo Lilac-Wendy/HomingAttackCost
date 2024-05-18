@@ -5,8 +5,8 @@ import net.minecraft.world.entity.player.Player;
 import java.util.HashMap;
 
 public class PlayerHomingData {
-    private static HashMap<Player, Boolean> isHoming = new HashMap<>();
-    private static HashMap<Player, Boolean> isBoosting = new HashMap<>();
+    private static final HashMap<Player, Boolean> isHoming = new HashMap<>();
+    private static final HashMap<Player, Boolean> isBoosting = new HashMap<>();
 
     public static void setHoming(Player player, boolean isHoming) {
         PlayerHomingData.isHoming.put(player, isHoming);

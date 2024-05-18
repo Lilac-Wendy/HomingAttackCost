@@ -37,6 +37,7 @@ public abstract class EntityRenderDispatcherMixin {
 
         LocalPlayer p = Minecraft.getInstance().player;
         float dist = livingEntity.getBbWidth();
+        assert p != null;
         double theta = Math.atan2(p.getX() - livingEntity.getX(), p.getZ() - livingEntity.getZ());
         double dx = dist * Math.sin(theta);
         double dz = dist * Math.cos(theta);

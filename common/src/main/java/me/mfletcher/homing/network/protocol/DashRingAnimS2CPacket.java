@@ -14,6 +14,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class DashRingAnimS2CPacket {
@@ -31,16 +32,18 @@ public class DashRingAnimS2CPacket {
         buf.writeInt(this.playerId);
     }
 
+    @SuppressWarnings("unchecked")
     public void apply(Supplier<NetworkManager.PacketContext> supplier) {
         NetworkManager.PacketContext context = supplier.get();
         context.queue(() -> {
             // Running on client
+            assert Minecraft.getInstance().player != null;
             Player player = (Player) Minecraft.getInstance().player.level().getEntity(this.playerId);
 
             if (player != null) {
                 var animation = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) player).get(new ResourceLocation(HomingAttack.MOD_ID, "animation"));
                 if (animation != null) {
-                    animation.setAnimation(new KeyframeAnimationPlayer(PlayerAnimationRegistry.getAnimation(new ResourceLocation(HomingAttack.MOD_ID, "dash_ring_spin")))
+                    animation.setAnimation(new KeyframeAnimationPlayer(Objects.requireNonNull(PlayerAnimationRegistry.getAnimation(new ResourceLocation(HomingAttack.MOD_ID, "dash_ring_spin"))))
                             .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL));
                 }
             }

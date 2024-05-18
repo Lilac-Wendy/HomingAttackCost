@@ -9,6 +9,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Objects;
+
 public class PlayerHomingAttackInfo {
     private final ServerPlayer player;
 
@@ -21,7 +23,7 @@ public class PlayerHomingAttackInfo {
     public PlayerHomingAttackInfo(ServerPlayer player, Entity target) {
         this.player = player;
         this.target = target;
-        startTime = player.getServer().getTickCount();
+        startTime = Objects.requireNonNull(player.getServer()).getTickCount();
 
         velocity = target.position().subtract(player.position()).normalize().scale(HomingAttack.config.homingSpeed);
         player.setDeltaMovement(velocity);
@@ -42,7 +44,7 @@ public class PlayerHomingAttackInfo {
             player.hurtMarked = true;
             sendHomingPacket(false);
             return false;
-        } else if (player.getServer().getTickCount() - startTime >= HomingAttack.config.homingTicksTimeout ||
+        } else if (Objects.requireNonNull(player.getServer()).getTickCount() - startTime >= HomingAttack.config.homingTicksTimeout ||
                 player.level().getBlockCollisions(player, player.getBoundingBox()).iterator().hasNext()) {
             sendHomingPacket(false);
             return false;
