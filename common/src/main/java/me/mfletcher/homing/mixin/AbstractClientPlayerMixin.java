@@ -13,12 +13,16 @@ import me.mfletcher.homing.HomingAttack;
 import me.mfletcher.homing.PlayerHomingData;
 import me.mfletcher.homing.mixinaccess.IAbstractClientPlayerMixin;
 import me.mfletcher.homing.mixinaccess.IKeyboardInputMixin;
+import me.mfletcher.homing.sounds.HomingSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Final;
@@ -31,6 +35,9 @@ public abstract class AbstractClientPlayerMixin extends Player implements IAbstr
     @Shadow
     @Final
     public ClientLevel clientLevel;
+
+    @Unique
+    private final SoundInstance boostSound = new SimpleSoundInstance(HomingSounds.BOOST_2.get(), SoundSource.PLAYERS, 0.8f, 1, SoundInstance.createUnseededRandom(), blockPosition());
 
     public AbstractClientPlayerMixin(Level level, BlockPos pos, float yaw, GameProfile gameProfile) {
         super(level, pos, yaw, gameProfile);
@@ -76,8 +83,10 @@ public abstract class AbstractClientPlayerMixin extends Player implements IAbstr
         if (PlayerHomingData.isBoosting(this) != boosting) {
             if (boosting) {
                 startBoostAnimation();
+                Minecraft.getInstance().getSoundManager().play(boostSound);
             } else {
                 stopAnimations();
+                Minecraft.getInstance().getSoundManager().stop(boostSound);
             }
         }
 

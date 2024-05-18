@@ -15,6 +15,7 @@ import java.util.function.Supplier;
 public class HomingSounds {
     public static final Supplier<RegistrarManager> MANAGER = Suppliers.memoize(() -> RegistrarManager.get(HomingAttack.MOD_ID));
     public static RegistrySupplier<SoundEvent> BOOST;
+    public static RegistrySupplier<SoundEvent> BOOST_2;
     public static RegistrySupplier<SoundEvent> HOMING;
     public static RegistrySupplier<SoundEvent> RETICLE;
     public static RegistrySupplier<SoundEvent> DASH_PANEL;
@@ -23,6 +24,7 @@ public class HomingSounds {
     public static void register() {
         Registrar<SoundEvent> soundEvents = MANAGER.get().get(Registries.SOUND_EVENT);
         BOOST = soundEvents.register(new ResourceLocation(HomingAttack.MOD_ID, "boost"), () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HomingAttack.MOD_ID, "boost")));
+        BOOST_2 = soundEvents.register(new ResourceLocation(HomingAttack.MOD_ID, "boost_2"), () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HomingAttack.MOD_ID, "boost_2")));
         HOMING = soundEvents.register(new ResourceLocation(HomingAttack.MOD_ID, "homing"), () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HomingAttack.MOD_ID, "homing")));
         RETICLE = soundEvents.register(new ResourceLocation(HomingAttack.MOD_ID, "reticle"), () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HomingAttack.MOD_ID, "reticle")));
         DASH_PANEL = soundEvents.register(new ResourceLocation(HomingAttack.MOD_ID, "dash_panel"), () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HomingAttack.MOD_ID, "dash_panel")));
