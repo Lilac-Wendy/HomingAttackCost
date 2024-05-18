@@ -1,7 +1,6 @@
 package me.mfletcher.homing.block;
 
 import com.google.common.base.Suppliers;
-import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrarManager;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -13,10 +12,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
 
 import java.util.function.Supplier;
 
@@ -36,6 +33,8 @@ public class HomingBlocks {
 
     public static final RegistrySupplier<Block> DASH_PANEL = registerBlock(new ResourceLocation(HomingAttack.MOD_ID, "dash_panel"),
             () -> new DashPanelBlock(BlockBehaviour.Properties.of().strength(1f).sound(SoundType.STONE).noCollission()));
+    public static final RegistrySupplier<Block> DASH_RING = registerBlock(new ResourceLocation(HomingAttack.MOD_ID, "dash_ring"),
+            () -> new DashRingBlock(BlockBehaviour.Properties.of().strength(1f).sound(SoundType.STONE).noCollission()));
 
     public static void register() {}
 }

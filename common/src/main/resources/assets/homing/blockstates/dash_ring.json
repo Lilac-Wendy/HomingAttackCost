@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "homing:block/dash_ring"},
+    "facing=east": {"model": "homing:block/dash_ring", "y": 90},
+    "facing=south": {"model": "homing:block/dash_ring", "y": 180},
+    "facing=west": {"model": "homing:block/dash_ring", "y": 270}
+  }
+}

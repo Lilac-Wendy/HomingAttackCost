@@ -23,5 +23,10 @@
     "sounds": [
       "homing:dash_panel"
     ]
+  },
+  "dash_ring": {
+    "sounds": [
+      "homing:dash_ring"
+    ]
   }
 }

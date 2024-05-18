@@ -16,6 +16,7 @@ public class HomingMessages {
         CHANNEL.register(BoostC2SPacket.class, BoostC2SPacket::encode, BoostC2SPacket::new, BoostC2SPacket::apply);
         CHANNEL.register(BoostS2CPacket.class, BoostS2CPacket::encode, BoostS2CPacket::new, BoostS2CPacket::apply);
         CHANNEL.register(ConfigSyncS2CPacket.class, ConfigSyncS2CPacket::encode, ConfigSyncS2CPacket::new, ConfigSyncS2CPacket::apply);
+        CHANNEL.register(DashRingAnimS2CPacket.class, DashRingAnimS2CPacket::encode, DashRingAnimS2CPacket::new, DashRingAnimS2CPacket::apply);
     }
 
     public static <MSG> void sendToServer(MSG message) {
