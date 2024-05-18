@@ -8,7 +8,7 @@ import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 import me.mfletcher.homing.HomingAttack;
-import me.mfletcher.homing.PlayerHomingData;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -35,12 +35,14 @@ public class DashRingAnimS2CPacket {
         NetworkManager.PacketContext context = supplier.get();
         context.queue(() -> {
             // Running on client
-            Player player = context.getPlayer();
+            Player player = (Player) Minecraft.getInstance().player.level().getEntity(this.playerId);
 
-            var animation = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) player).get(new ResourceLocation(HomingAttack.MOD_ID, "animation"));
-            if (animation != null) {
-                animation.setAnimation(new KeyframeAnimationPlayer(PlayerAnimationRegistry.getAnimation(new ResourceLocation(HomingAttack.MOD_ID, "dash_ring_spin")))
-                        .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL));
+            if (player != null) {
+                var animation = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData((AbstractClientPlayer) player).get(new ResourceLocation(HomingAttack.MOD_ID, "animation"));
+                if (animation != null) {
+                    animation.setAnimation(new KeyframeAnimationPlayer(PlayerAnimationRegistry.getAnimation(new ResourceLocation(HomingAttack.MOD_ID, "dash_ring_spin")))
+                            .setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL));
+                }
             }
         });
     }
