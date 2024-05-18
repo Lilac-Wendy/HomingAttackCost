@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -22,7 +23,7 @@ public class DashRingBlock extends DashBlock {
 
 
     public DashRingBlock(Properties properties) {
-        super(properties, HomingSounds.DASH_RING);
+        super(properties);
     }
 
     @Override
@@ -37,6 +38,7 @@ public class DashRingBlock extends DashBlock {
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         super.entityInside(state, level, pos, entity);
+        level.playSound(null, pos, HomingSounds.DASH_RING.get(), SoundSource.BLOCKS, 0.8f, 1);
 
         if (entity instanceof ServerPlayer player && level instanceof ServerLevel serverLevel) {
             for (ServerPlayer p : serverLevel.players()) {

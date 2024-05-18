@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -23,16 +24,13 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class DashBlock extends Block {
+public abstract class DashBlock extends Block implements SimpleWaterloggedBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    private static RegistrySupplier<SoundEvent> DASH_SOUND;
-
-    public DashBlock(Properties properties, @Nullable RegistrySupplier<SoundEvent> dashSound) {
+    public DashBlock(Properties properties) {
         super(properties);
         registerDefaultState(getStateDefinition().any().setValue(WATERLOGGED, false));
-        DASH_SOUND = dashSound;
     }
 
     @Override
@@ -49,9 +47,6 @@ public abstract class DashBlock extends Block {
         entity.setDeltaMovement(Math.cos(rotation) * dashSpeed, 0, Math.sin(rotation) * dashSpeed);
         entity.hasImpulse = true;
         entity.hurtMarked = true;
-
-        if (DASH_SOUND != null)
-            level.playSound(null, pos, DASH_SOUND.get(), SoundSource.BLOCKS, 0.8f, 1.0F);
     }
 
     // rotate to the placed direction

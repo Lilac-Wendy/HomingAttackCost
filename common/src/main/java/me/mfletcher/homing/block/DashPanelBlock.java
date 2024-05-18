@@ -3,7 +3,10 @@ package me.mfletcher.homing.block;
 import me.mfletcher.homing.sounds.HomingSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -14,11 +17,17 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-public class DashPanelBlock extends DashBlock implements SimpleWaterloggedBlock {
+public class DashPanelBlock extends DashBlock {
     private static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 1, 15);
 
     public DashPanelBlock(Properties properties) {
-        super(properties, HomingSounds.DASH_PANEL);
+        super(properties);
+    }
+
+    @Override
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        super.entityInside(state, level, pos, entity);
+        level.playSound(null, pos, HomingSounds.DASH_PANEL.get(), SoundSource.BLOCKS, 0.8f, 1);
     }
 
     @Override
