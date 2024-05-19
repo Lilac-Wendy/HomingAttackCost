@@ -36,6 +36,8 @@ public class HomingBlocks {
             () -> new DashPanelBlock(BlockBehaviour.Properties.of().strength(1f).sound(SoundType.STONE).noCollission()));
     public static final RegistrySupplier<Block> DASH_RING = registerBlock(new ResourceLocation(HomingAttack.MOD_ID, "dash_ring"),
             () -> new DashRingBlock(BlockBehaviour.Properties.of().strength(1f).sound(SoundType.STONE).noCollission()));
+    public static final RegistrySupplier<Block> SPRING = registerBlock(new ResourceLocation(HomingAttack.MOD_ID, "spring"),
+            () -> new SpringBlock(BlockBehaviour.Properties.of().strength(1f).sound(SoundType.STONE).noCollission()));
 
     public static void register() {}
 }

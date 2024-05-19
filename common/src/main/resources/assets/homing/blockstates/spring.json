@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "homing:block/spring"
+    }
+  }
+}

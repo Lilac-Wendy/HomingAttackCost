@@ -28,5 +28,10 @@
     "sounds": [
       "homing:dash_ring"
     ]
+  },
+  "spring": {
+    "sounds": [
+      "homing:spring"
+    ]
   }
 }

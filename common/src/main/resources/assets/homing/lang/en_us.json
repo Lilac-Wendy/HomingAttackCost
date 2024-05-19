@@ -14,5 +14,6 @@
 
   "item.homing.chaos_emeralds": "Chaos Emeralds",
   "block.homing.dash_panel": "Dash Panel",
-  "block.homing.dash_ring": "Dash Ring"
+  "block.homing.dash_ring": "Dash Ring",
+  "block.homing.spring": "Spring"
 }
