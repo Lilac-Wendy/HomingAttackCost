@@ -11,30 +11,27 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.Objects;
 
-public class PlayerHomingAttackInfo {
-    private final ServerPlayer player;
+public PlayerHomingAttackInfo(ServerPlayer player, Entity target) {
+    this.player = player;
+    this.target = target;
+    startTime = Objects.requireNonNull(player.getServer()).getTickCount();
 
-    private final Entity target;
-    private Vec3 velocity;
-    private final int startTime;
+    velocity = target.position().subtract(player.position()).normalize().scale(HomingAttack.config.homingSpeed);
+    player.setDeltaMovement(velocity);
+    player.hasImpulse = true;
+    player.hurtMarked = true;
+    player.causeFoodExhaustion(1f);
 
-    private float prevDist;
+    prevDist = player.distanceTo(target);
 
-    public PlayerHomingAttackInfo(ServerPlayer player, Entity target) {
-        this.player = player;
-        this.target = target;
-        startTime = Objects.requireNonNull(player.getServer()).getTickCount();
+    sendHomingPacket(true);
 
-        velocity = target.position().subtract(player.position()).normalize().scale(HomingAttack.config.homingSpeed);
-        player.setDeltaMovement(velocity);
-        player.hasImpulse = true;
-        player.hurtMarked = true;
-        player.causeFoodExhaustion(1f);
+    // Increment the player's scoreboard for homing attack usage. Under Testing. 
+    Objective homingObjective = getOrCreateHomingAttackObjective(player);
+    Score homingScore = player.getScoreboard().getOrCreatePlayerScore(player.getScoreboardName(), homingObjective);
+    homingScore.setScore(homingScore.getScore() + 1);
+}
 
-        prevDist = player.distanceTo(target);
-
-        sendHomingPacket(true);
-    }
 
     public boolean tick() {
         if (player.getBoundingBox().inflate(2).intersects(target.getBoundingBox().inflate(2))) {
