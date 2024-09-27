@@ -1,7 +1,6 @@
 package me.mfletcher.homing.fabric;
 
 import be.florens.expandability.api.fabric.LivingFluidCollisionCallback;
-import me.mfletcher.homing.HomingAttack;
 import me.mfletcher.homing.PlayerHomingData;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.core.particles.ParticleTypes;
@@ -19,7 +18,7 @@ public final class HomingAttackFabric implements ModInitializer {
         // Proceed with mild caution.
 
         // Run our common setup.
-        HomingAttack.init();
+        PlayerHomingData.init();
 
         LivingFluidCollisionCallback.EVENT.register(HomingAttackFabric::onFluidCollision);
     }

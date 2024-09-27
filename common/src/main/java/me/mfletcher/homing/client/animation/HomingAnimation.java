@@ -9,20 +9,20 @@ import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.core.util.Ease;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationFactory;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
-import me.mfletcher.homing.HomingAttack;
+import me.mfletcher.homing.PlayerHomingData;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 public class HomingAnimation {
-    public static final ResourceLocation BOOST_ANIMATION = new ResourceLocation(HomingAttack.MOD_ID, "boost");
-    public static final ResourceLocation SPINDASH_ANIMATION = new ResourceLocation(HomingAttack.MOD_ID, "spindash");
-    public static final ResourceLocation DASH_RING_ANIMATION = new ResourceLocation(HomingAttack.MOD_ID, "dash_ring_spin");
+    public static final ResourceLocation BOOST_ANIMATION = new ResourceLocation(PlayerHomingData.MOD_ID, "boost");
+    public static final ResourceLocation SPINDASH_ANIMATION = new ResourceLocation(PlayerHomingData.MOD_ID, "spindash");
+    public static final ResourceLocation DASH_RING_ANIMATION = new ResourceLocation(PlayerHomingData.MOD_ID, "dash_ring_spin");
 
     public static void register() {
         PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(
-                new ResourceLocation(HomingAttack.MOD_ID, "animation"),
+                new ResourceLocation(PlayerHomingData.MOD_ID, "animation"),
                 42,
                 (abstractClientPlayer) -> new ModifierLayer<>());
     }

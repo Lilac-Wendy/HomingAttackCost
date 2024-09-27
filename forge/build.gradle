@@ -62,3 +62,11 @@ shadowJar {
 remapJar {
     input.set shadowJar.archiveFile
 }
+
+// Aqui você adiciona a task genIntelliRuns
+tasks.register('genIntelliRuns') {
+    doLast {
+        // Coloque aqui o código necessário para gerar as configurações
+        println 'Gerando as configurações de execução para IntelliJ'
+    }
+}

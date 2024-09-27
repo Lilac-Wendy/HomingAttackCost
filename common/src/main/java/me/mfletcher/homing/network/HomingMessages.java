@@ -1,13 +1,13 @@
 package me.mfletcher.homing.network;
 
 import dev.architectury.networking.NetworkChannel;
-import me.mfletcher.homing.HomingAttack;
+import me.mfletcher.homing.PlayerHomingData;
 import me.mfletcher.homing.network.protocol.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
 public class HomingMessages {
-    public static final NetworkChannel CHANNEL = NetworkChannel.create(new ResourceLocation(HomingAttack.MOD_ID, "networking_channel"));
+    public static final NetworkChannel CHANNEL = NetworkChannel.create(new ResourceLocation(PlayerHomingData.MOD_ID, "networking_channel"));
 
     public static void register() {
         // Register messages here

@@ -1,7 +1,7 @@
 package me.mfletcher.homing.mixin.mixins;
 
 import com.mojang.blaze3d.platform.WindowEventHandler;
-import me.mfletcher.homing.HomingAttack;
+import me.mfletcher.homing.PlayerHomingData;
 import me.mfletcher.homing.mixin.access.IMinecraftMixin;
 import me.mfletcher.homing.sounds.HomingSounds;
 import net.minecraft.client.Minecraft;
@@ -63,8 +63,8 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnabl
             if (!player.onGround()) {
                 if (homing$homingReady) {
                     Entity entityLooking = homing$getEntityLooking();
-                    if (entityLooking != null && !entityLooking.equals(homing$getHighlightedEntity()) && HomingAttack.config.reticleVolume > 0) {
-                        getSoundManager().play(new SimpleSoundInstance(HomingSounds.RETICLE.get(), SoundSource.PLAYERS, HomingAttack.config.reticleVolume / 100f, 1, SoundInstance.createUnseededRandom(), player.blockPosition()));
+                    if (entityLooking != null && !entityLooking.equals(homing$getHighlightedEntity()) && PlayerHomingData.config.reticleVolume > 0) {
+                        getSoundManager().play(new SimpleSoundInstance(HomingSounds.RETICLE.get(), SoundSource.PLAYERS, PlayerHomingData.config.reticleVolume / 100f, 1, SoundInstance.createUnseededRandom(), player.blockPosition()));
                     }
                     homing$setHighlightedEntity(entityLooking);
                 } else
@@ -80,7 +80,7 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnabl
     @Unique
     private Entity homing$getEntityLooking() {
         // This function is "heavily inspired" by GameRenderer#updateTargetedEntity
-        float homingRange = HomingAttack.config.homingRange;
+        float homingRange = PlayerHomingData.config.homingRange;
 
         Entity camera = getCameraEntity();
         Vec3 vec32 = camera.getViewVector(1.0f);

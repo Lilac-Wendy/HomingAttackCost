@@ -2,9 +2,8 @@ package me.mfletcher.homing.forge;
 
 import be.florens.expandability.api.forge.LivingFluidCollisionEvent;
 import dev.architectury.platform.forge.EventBuses;
-import me.mfletcher.homing.HomingAttack;
-import me.mfletcher.homing.ModConfig;
 import me.mfletcher.homing.PlayerHomingData;
+import me.mfletcher.homing.ModConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.FluidTags;
@@ -21,14 +20,14 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod(HomingAttack.MOD_ID)
+@Mod(PlayerHomingData.MOD_ID)
 public final class HomingAttackForge {
     public HomingAttackForge() {
         // Submit our event bus to let Architectury API register our content on the right time.
-        EventBuses.registerModEventBus(HomingAttack.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
+        EventBuses.registerModEventBus(PlayerHomingData.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
 
         // Run our common setup.
-        HomingAttack.init();
+        PlayerHomingData.init();
 
         MinecraftForge.EVENT_BUS.addListener(HomingAttackForge::onFluidCollision);
 

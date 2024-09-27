@@ -1,6 +1,5 @@
 package me.mfletcher.homing;
 
-
 import me.mfletcher.homing.network.HomingMessages;
 import me.mfletcher.homing.network.protocol.AttackS2CPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,27 +10,28 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.Objects;
 
-public PlayerHomingAttackInfo(ServerPlayer player, Entity target) {
-    this.player = player;
-    this.target = target;
-    startTime = Objects.requireNonNull(player.getServer()).getTickCount();
+public class PlayerHomingAttackInfo {
+    private final ServerPlayer player;
+    private final Entity target;
+    private Vec3 velocity;
+    private final int startTime;
+    private float prevDist;
 
-    velocity = target.position().subtract(player.position()).normalize().scale(HomingAttack.config.homingSpeed);
-    player.setDeltaMovement(velocity);
-    player.hasImpulse = true;
-    player.hurtMarked = true;
-    player.causeFoodExhaustion(1f);
+    public PlayerHomingAttackInfo(ServerPlayer player, Entity target) {
+        this.player = player;
+        this.target = target;
+        startTime = Objects.requireNonNull(player.getServer()).getTickCount();
 
-    prevDist = player.distanceTo(target);
+        velocity = target.position().subtract(player.position()).normalize().scale(HomingAttack.config.homingSpeed);
+        player.setDeltaMovement(velocity);
+        player.hasImpulse = true;
+        player.hurtMarked = true;
+        player.causeFoodExhaustion(1f);
 
-    sendHomingPacket(true);
+        prevDist = player.distanceTo(target);
 
-    // Increment the player's scoreboard for homing attack usage. Under Testing. 
-    Objective homingObjective = getOrCreateHomingAttackObjective(player);
-    Score homingScore = player.getScoreboard().getOrCreatePlayerScore(player.getScoreboardName(), homingObjective);
-    homingScore.setScore(homingScore.getScore() + 1);
-}
-
+        sendHomingPacket(true);
+    }
 
     public boolean tick() {
         if (player.getBoundingBox().inflate(2).intersects(target.getBoundingBox().inflate(2))) {

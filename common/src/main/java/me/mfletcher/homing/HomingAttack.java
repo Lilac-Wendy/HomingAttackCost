@@ -22,7 +22,6 @@ public final class HomingAttack {
     public static ModConfig config;
 
     public static void init() {
-        // Write common init code here.
         HomingMessages.register();
         HomingSounds.register();
         HomingBlocks.register();
@@ -42,5 +41,7 @@ public final class HomingAttack {
             HomingAbility.handleHoming();
             BoostAbility.handleBoost();
         });
+
+        PlayerHomingData.initialize();
     }
 }

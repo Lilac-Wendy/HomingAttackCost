@@ -1,7 +1,7 @@
 package me.mfletcher.homing.network.protocol;
 
 import dev.architectury.networking.NetworkManager;
-import me.mfletcher.homing.HomingAttack;
+import me.mfletcher.homing.PlayerHomingData;
 import me.mfletcher.homing.ModConfig;
 import net.minecraft.network.FriendlyByteBuf;
 
@@ -26,7 +26,7 @@ public class ConfigSyncS2CPacket {
         NetworkManager.PacketContext context = supplier.get();
         context.queue(() -> {
             // Running on client
-            HomingAttack.config.homingRange = this.homingRange;
+            PlayerHomingData.config.homingRange = this.homingRange;
         });
     }
 }

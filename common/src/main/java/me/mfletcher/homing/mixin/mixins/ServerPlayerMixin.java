@@ -1,9 +1,8 @@
 package me.mfletcher.homing.mixin.mixins;
 
 import com.mojang.authlib.GameProfile;
-import me.mfletcher.homing.HomingAttack;
-import me.mfletcher.homing.PlayerHomingAttackInfo;
 import me.mfletcher.homing.PlayerHomingData;
+import me.mfletcher.homing.PlayerHomingAttackInfo;
 import me.mfletcher.homing.mixin.access.IServerPlayerMixin;
 import me.mfletcher.homing.network.HomingMessages;
 import me.mfletcher.homing.network.protocol.BoostS2CPacket;
@@ -43,7 +42,7 @@ public abstract class ServerPlayerMixin extends Player implements IServerPlayerM
 
     @Unique
     private final MobEffectInstance homing$speedEffect = new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20,
-            HomingAttack.config.boostLevel, false, false, false);
+            PlayerHomingData.config.boostLevel, false, false, false);
 
 
     public ServerPlayerMixin(Level level, BlockPos pos, float yaw, GameProfile gameProfile) {
@@ -69,7 +68,7 @@ public abstract class ServerPlayerMixin extends Player implements IServerPlayerM
 
     @Unique
     public void homing$doHoming(Entity entity) {
-        if (entity.distanceTo(this) <= HomingAttack.config.homingRange && homing$playerHomingAttackInfo == null) {
+        if (entity.distanceTo(this) <= PlayerHomingData.config.homingRange && homing$playerHomingAttackInfo == null) {
             level().playSound(null, blockPosition(), HomingSounds.HOMING.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
             homing$playerHomingAttackInfo = new PlayerHomingAttackInfo((ServerPlayer) (Player) this, entity);
         } else
